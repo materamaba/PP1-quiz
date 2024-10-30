@@ -176,8 +176,46 @@
         question: "Który symbol w C jest używany do tworzenia komentarzy jednoliniowych?",
         answers: ["//", "/* */", "#", "--"],
         correct: 0
+    },
+    {
+        question: "Która funkcja służy do wyświetlania tekstu na ekranie?",
+        answers: ["scanf", "printf","display", "print"], correct: 1 
+    },
+    { question: "Jaki wynik daje operacja 7 % 3?",
+     answers: ["1", "2", "3", "0"],
+     correct: 1
+    },
+    {
+        question: "Która instrukcja służy do wczytywania wartości z klawiatury?",
+        answers: ["printf", "scanf", "cin", "read"],
+        correct: 1 
+    }, 
+    {
+        question: "Jak nazywa się operator logiczny OR?",
+        answers: ["&&", "||", "!", "%"],
+        correct: 1
+    },
+    {
+        question: "Jaki zakres wartości przechowuje zmienna typu char?",
+        answers: ["-128 do 127", "-32768 do 32767", "-2147483648 do 2147483647", "0 do 255"],
+        correct: 0
+    },
+    {
+        question: "Jak zapisuje się liczbę szesnastkową w języku C?",
+        answers: ["0x przed liczbą", "0 przed liczbą", "H przed liczbą", "# przed liczbą"],
+        correct: 0
+    },
+    {
+    question: "Które wyrażenie poprawnie deklaruje zmienną typu float?",
+    answers: ["int zmienna = 3.14;", "float zmienna = 3.14;", "char zmienna = 3.14;", "double zmienna = 3.14;"],
+    correct: 1 
+    },
+    {
+        question: "Który zapis rzutuje zmienną int na float?",
+        answers: ["(float) zmienna", "(int) zmienna", "(double) zmienna", "(char) zmienna"],
+        correct: 0 
     }
-]
+        ];
 
         function getRandomQuestions() {
             const shuffled = questions.sort(() => 0.5 - Math.random());
