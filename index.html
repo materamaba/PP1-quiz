@@ -472,17 +472,12 @@
         correct: 3
     }
 ];
-
-
-        function getRandomQuestions() {
-            const shuffled = questions.sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, 10);
-        }
+// Losowo wybieramy 10 pytań raz, aby były stałe przez cały quiz
+        const randomQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 10);
 
         // Wczytanie quizu na stronę
         function loadQuiz() {
             const quizContainer = document.getElementById("quiz-container");
-            const randomQuestions = getRandomQuestions();
             randomQuestions.forEach((q, index) => {
                 const questionEl = document.createElement("div");
                 questionEl.className = "question";
@@ -497,7 +492,6 @@
                 });
                 quizContainer.appendChild(questionEl);
             });
-            window.randomQuestions = randomQuestions; // Przechowanie losowych pytań do sprawdzenia
         }
 
         // Funkcja do sprawdzania odpowiedzi i wyświetlania wyników
