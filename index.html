@@ -17,23 +17,167 @@
 
     <script>
         const questions = [
-            {
-                question: "Kto zdefiniował język C?",
-                answers: ["Dennis Ritchie i Brian Kernighan", "Alan Turing i John von Neumann", "Linus Torvalds i Bill Gates", "Steve Jobs i Steve Wozniak"],
-                correct: 0
-            },
-            {
-                question: "Który znak nie jest znakiem specjalnym w języku C?",
-                answers: ["%", "@", "&", "#"],
-                correct: 1
-            },
-            {
-                question: "W którym roku wprowadzono standard ANSI C?",
-                answers: ["1978", "1989", "1999", "2005"],
-                correct: 1
-            },
-            // Dodaj kolejne pytania
-        ];
+    {
+        question: "Kto zdefiniował język C?",
+        answers: ["Dennis Ritchie i Brian Kernighan", "Alan Turing i John von Neumann", "Linus Torvalds i Bill Gates", "Steve Jobs i Steve Wozniak"],
+        correct: 0
+    },
+    {
+        question: "Który znak nie jest znakiem specjalnym w języku C?",
+        answers: ["%", "@", "&", "#"],
+        correct: 1
+    },
+    {
+        question: "W którym roku wprowadzono standard ANSI C?",
+        answers: ["1978", "1989", "1999", "2005"],
+        correct: 1
+    },
+    {
+        question: "Jakie są podstawowe typy danych w języku C?",
+        answers: ["int, char, double, string", "char, int, float, double", "byte, short, long, float", "short, float, double, string"],
+        correct: 1
+    },
+    {
+        question: "Który operator używany jest do negacji w języku C?",
+        answers: ["&&", "||", "!", "%"],
+        correct: 2
+    },
+    {
+        question: "Jakie wartości może przyjąć zmienna logiczna w języku C?",
+        answers: ["0 i 1", "true i false", "tak i nie", "1 i -1"],
+        correct: 0
+    },
+    {
+        question: "Jakie jest znaczenie operatora ++?",
+        answers: ["Inkrementuje wartość o 1", "Zwiększa wartość o 2", "Zmniejsza wartość o 1", "Zeruje wartość"],
+        correct: 0
+    },
+    {
+        question: "Jaki zakres ma typ unsigned int na 32-bitowym systemie?",
+        answers: ["-32768 do 32767", "0 do 65535", "0 do 4294967295", "-2147483648 do 2147483647"],
+        correct: 2
+    },
+    {
+        question: "Które wyrażenie służy do deklaracji stałej symbolicznej?",
+        answers: ["int const PI = 3.14;", "#define PI 3.14", "float PI = 3.14;", "#const PI = 3.14"],
+        correct: 1
+    },
+    {
+        question: "Która funkcja umożliwia pobranie liczby całkowitej z tekstu?",
+        answers: ["atof", "atoi", "scanf", "getchar"],
+        correct: 1
+    },
+    {
+        question: "Jakiego kwalifikatora użyć, aby zadeklarować zmienną jako niemodyfikowalną?",
+        answers: ["static", "const", "unsigned", "volatile"],
+        correct: 1
+    },
+    {
+        question: "Co jest prawdziwe na temat identyfikatorów w C?",
+        answers: ["Mogą zaczynać się cyfrą lub literą", "Mogą mieć dowolną długość, ale istotne jest pierwszych 31 znaków", "Wszystkie muszą być pisane wielkimi literami", "Muszą zaczynać się znakiem specjalnym"],
+        correct: 1
+    },
+    {
+        question: "Które z poniższych słów nie jest słowem kluczowym w C?",
+        answers: ["while", "float", "define", "for"],
+        correct: 2
+    },
+    {
+        question: "Jakiej postaci nie przyjmuje stała całkowita w języku C?",
+        answers: ["Dziesiętnej", "Binarną", "Ósemkowej", "Szesnastkowej"],
+        correct: 1
+    },
+    {
+        question: "Który symbol formatujący służy do drukowania liczby zmiennopozycyjnej w postaci wykładniczej?",
+        answers: ["%f", "%e", "%i", "%d"],
+        correct: 1
+    },
+    {
+        question: "Jakie typy zmiennych można stosować z kwalifikatorem volatile?",
+        answers: ["int, float, double", "char, int", "Wszystkie typy", "Tylko const"],
+        correct: 2
+    },
+    {
+        question: "Które z poniższych wyrażeń opisuje poprawny sposób zdefiniowania stałej symbolicznej?",
+        answers: ["const int liczba = 10;", "#define LICZBA 10", "int liczba = 10;", "const #define liczba 10"],
+        correct: 1
+    },
+    {
+        question: "Który z operatorów jest używany do przyrównania w C?",
+        answers: ["!=", "=", "==", "==="],
+        correct: 2
+    },
+    {
+        question: "Który operator logiczny zwraca wartość true tylko wtedy, gdy oba wyrażenia są prawdziwe?",
+        answers: ["||", "&&", "!", "=="],
+        correct: 1
+    },
+    {
+        question: "W pętli for, która część odpowiada za warunek kontynuacji?",
+        answers: ["Pierwsza", "Druga", "Trzecia", "Wszystkie"],
+        correct: 1
+    },
+    {
+        question: "Wskaż poprawny zapis deklaracji tablicy dwuwymiarowej w C:",
+        answers: ["int tablica[ ][5] = {{1, 2}, {3, 4, 5}};", "int tablica[5][ ];", "int tablica = {1, 2, 3, 4, 5};", "int tablica[5] = {1, 2, 3, 4, 5};"],
+        correct: 0
+    },
+    {
+        question: "Co wykonuje funkcja scanf?",
+        answers: ["Drukuje tekst na ekranie", "Pobiera dane wejściowe z klawiatury i przekształca je według formatu", "Wykonuje operacje na plikach", "Tworzy tablicę danych"],
+        correct: 1
+    },
+    {
+        question: "Jakie wartości ma zmienna logiczna w języku C?",
+        answers: ["0 dla fałszu, każda wartość niezerowa dla prawdy", "0 dla prawdy, 1 dla fałszu", "Tylko 0", "Tylko 1"],
+        correct: 0
+    },
+    {
+        question: "Jak zapisywana jest funkcja bez parametrów w języku C?",
+        answers: ["int funkcja[];", "int funkcja(void);", "int funkcja;", "void funkcja[];"],
+        correct: 1
+    },
+    {
+        question: "Które wyrażenie służy do konwersji typu zmiennej na float?",
+        answers: ["int", "(float)", "double", "char"],
+        correct: 1
+    },
+    {
+        question: "Wskaż przykład operatora przyrostkowego w C:",
+        answers: ["+", "--", "%", "/"],
+        correct: 1
+    },
+    {
+        question: "Jaki wynik daje int a = 5; int b = a++;?",
+        answers: ["a=5, b=6", "a=6, b=6", "a=5, b=5", "a=6, b=5"],
+        correct: 3
+    },
+    {
+        question: "Który zapis wskazuje na poprawne użycie pętli do…while?",
+        answers: ["while (wyrażenie) do { instrukcja; }", "do { instrukcja; } while (wyrażenie);", "do { instrukcja; }", "while (wyrażenie) { instrukcja; }"],
+        correct: 1
+    },
+    {
+        question: "Co robi pow(x, y) w bibliotece <math.h>?",
+        answers: ["Oblicza x do potęgi y", "Oblicza pierwiastek y-tego stopnia z x", "Zwraca wartość bezwzględną x", "Nic, nie jest to funkcja z <math.h>"],
+        correct: 0
+    },
+    {
+        question: "Co jest rezultatem wyrażenia (float) 5 / 2?",
+        answers: ["2", "2.5", "2.0", "3"],
+        correct: 1
+    },
+    {
+        question: "Który operator relacyjny oznacza „większe lub równe”?",
+        answers: ["<=", ">=", "==", "!="],
+        correct: 1
+    },
+    {
+        question: "Który symbol w C jest używany do tworzenia komentarzy jednoliniowych?",
+        answers: ["//", "/* */", "#", "--"],
+        correct: 0
+    }
+]
 
         function getRandomQuestions() {
             const shuffled = questions.sort(() => 0.5 - Math.random());
