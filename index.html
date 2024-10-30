@@ -241,7 +241,7 @@ const questions = [
         for (i = 1; i <= 5; i++) { 
         if (i == 3) 
         break; 
-        printf(\"%d \", i);
+        printf("%d", i);
         }</code></pre>```,
         answers: ["1 2 3 4 5", "1 2", "3", "1 2 3"],
         correct: 1
@@ -257,7 +257,7 @@ const questions = [
         correct: 1
     },
     {
-        question: "Jaka jest wartość zmiennej wynik po wykonaniu kodu: int a = 5; wynik = a++ + ++a;?",
+        question: 'Jaka jest wartość zmiennej wynik po wykonaniu kodu: <pre><code class="language-c">int a = 5; wynik = a++ + ++a;</pre></code>?',
         answers: ["11", "12", "13", "10"],
         correct: 2
     },
@@ -267,7 +267,7 @@ const questions = [
         correct: 2
     },
     {
-        question: "Jakiego wyniku można oczekiwać po wykonaniu kodu: int a = 10; int *ptr = &a; printf(\"%d\", *ptr);?",
+        question: 'Jakiego wyniku można oczekiwać po wykonaniu kodu: <pre><code class="language-c">int a = 10; int *ptr = &a; printf("%d", *ptr);</pre></code>?',
         answers: ["10", "adres zmiennej a", "wskaźnik do zmiennej a", "Błąd kompilacji"],
         correct: 0
     },
