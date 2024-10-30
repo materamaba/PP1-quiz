@@ -50,7 +50,7 @@
     <div id="result"></div>
 
     <script>
-        const questions = [
+     const questions = [
     {
         question: "Kto zdefiniował język C?",
         answers: ["Dennis Ritchie i Brian Kernighan", "Alan Turing i John von Neumann", "Linus Torvalds i Bill Gates", "Steve Jobs i Steve Wozniak"],
@@ -62,13 +62,13 @@
         correct: 1
     },
     {
-        question: "W którym roku wprowadzono standard ANSI C?",
-        answers: ["1978", "1989", "1999", "2005"],
-        correct: 1
+        question: "Ile razy wykona się pętla for: for(int i = 0; i < 10; i++)?",
+        answers: ["10", "9", "11", "Nie wykona się ani razu"],
+        correct: 0
     },
     {
-        question: "Jakie są podstawowe typy danych w języku C?",
-        answers: ["int, char, double, string", "char, int, float, double", "byte, short, long, float", "short, float, double, string"],
+        question: "W którym roku wprowadzono standard ANSI C?",
+        answers: ["1978", "1989", "1999", "2005"],
         correct: 1
     },
     {
@@ -77,14 +77,29 @@
         correct: 2
     },
     {
+        question: "Jakie są podstawowe typy danych w języku C?",
+        answers: ["int, char, double, string", "char, int, float, double", "byte, short, long, float", "short, float, double, string"],
+        correct: 1
+    },
+    {
         question: "Jakie wartości może przyjąć zmienna logiczna w języku C?",
         answers: ["0 i 1", "true i false", "tak i nie", "1 i -1"],
         correct: 0
     },
     {
-        question: "Jakie jest znaczenie operatora ++?",
-        answers: ["Inkrementuje wartość o 1", "Zwiększa wartość o 2", "Zmniejsza wartość o 1", "Zeruje wartość"],
+        question: "Jakiego typu wynik daje wyrażenie '5 / 2'?",
+        answers: ["2.5", "float", "int", "double"],
+        correct: 2
+    },
+    {
+        question: "Co wykonuje pętla while: while(1) {}?",
+        answers: ["Wykonuje się bez końca", "Wykona się raz", "Wykona się 0 razy", "Wykona się do napotkania błędu"],
         correct: 0
+    },
+    {
+        question: "Co zwraca operator '==' w przypadku porównania nierównych wartości?",
+        answers: ["1", "0", "True", "False"],
+        correct: 1
     },
     {
         question: "Jaki zakres ma typ unsigned int na 32-bitowym systemie?",
@@ -92,79 +107,19 @@
         correct: 2
     },
     {
-        question: "Które wyrażenie służy do deklaracji stałej symbolicznej?",
-        answers: ["int const PI = 3.14;", "#define PI 3.14", "float PI = 3.14;", "#const PI = 3.14"],
+        question: "Która instrukcja służy do wczytywania wartości z klawiatury?",
+        answers: ["printf", "scanf", "cin", "read"],
         correct: 1
     },
     {
-        question: "Która funkcja umożliwia pobranie liczby całkowitej z tekstu?",
-        answers: ["atof", "atoi", "scanf", "getchar"],
+        question: "Które z poniższych wyrażeń jest poprawnym zapisem deklaracji tablicy?",
+        answers: ["int arr[] = {1, 2, 3};", "int arr[3] = {1, 2, 3};", "int arr[ ] = 1, 2, 3;", "int arr[3] = (1, 2, 3);"],
         correct: 1
     },
     {
-        question: "Jakiego kwalifikatora użyć, aby zadeklarować zmienną jako niemodyfikowalną?",
-        answers: ["static", "const", "unsigned", "volatile"],
+        question: "Który zapis jest poprawny dla komentarza wieloliniowego?",
+        answers: ["// komentarz", "/* komentarz */", "# komentarz", "&lt;!-- komentarz --&rt;"],
         correct: 1
-    },
-    {
-        question: "Co jest prawdziwe na temat identyfikatorów w C?",
-        answers: ["Mogą zaczynać się cyfrą lub literą", "Mogą mieć dowolną długość, ale istotne jest pierwszych 31 znaków", "Wszystkie muszą być pisane wielkimi literami", "Muszą zaczynać się znakiem specjalnym"],
-        correct: 1
-    },
-    {
-        question: "Które z poniższych słów nie jest słowem kluczowym w C?",
-        answers: ["while", "float", "define", "for"],
-        correct: 2
-    },
-    {
-        question: "Jakiej postaci nie przyjmuje stała całkowita w języku C?",
-        answers: ["Dziesiętnej", "Binarną", "Ósemkowej", "Szesnastkowej"],
-        correct: 1
-    },
-    {
-        question: "Który symbol formatujący służy do drukowania liczby zmiennopozycyjnej w postaci wykładniczej?",
-        answers: ["%f", "%e", "%i", "%d"],
-        correct: 1
-    },
-    {
-        question: "Jakie typy zmiennych można stosować z kwalifikatorem volatile?",
-        answers: ["int, float, double", "char, int", "Wszystkie typy", "Tylko const"],
-        correct: 2
-    },
-    {
-        question: "Które z poniższych wyrażeń opisuje poprawny sposób zdefiniowania stałej symbolicznej?",
-        answers: ["const int liczba = 10;", "#define LICZBA 10", "int liczba = 10;", "const #define liczba 10"],
-        correct: 1
-    },
-    {
-        question: "Który z operatorów jest używany do przyrównania w C?",
-        answers: ["!=", "=", "==", "==="],
-        correct: 2
-    },
-    {
-        question: "Który operator logiczny zwraca wartość true tylko wtedy, gdy oba wyrażenia są prawdziwe?",
-        answers: ["||", "&&", "!", "=="],
-        correct: 1
-    },
-    {
-        question: "W pętli for, która część odpowiada za warunek kontynuacji?",
-        answers: ["Pierwsza", "Druga", "Trzecia", "Wszystkie"],
-        correct: 1
-    },
-    {
-        question: "Wskaż poprawny zapis deklaracji tablicy dwuwymiarowej w C:",
-        answers: ["int tablica[ ][5] = {{1, 2}, {3, 4, 5}};", "int tablica[5][ ];", "int tablica = {1, 2, 3, 4, 5};", "int tablica[5] = {1, 2, 3, 4, 5};"],
-        correct: 0
-    },
-    {
-        question: "Co wykonuje funkcja scanf?",
-        answers: ["Drukuje tekst na ekranie", "Pobiera dane wejściowe z klawiatury i przekształca je według formatu", "Wykonuje operacje na plikach", "Tworzy tablicę danych"],
-        correct: 1
-    },
-    {
-        question: "Jakie wartości ma zmienna logiczna w języku C?",
-        answers: ["0 dla fałszu, każda wartość niezerowa dla prawdy", "0 dla prawdy, 1 dla fałszu", "Tylko 0", "Tylko 1"],
-        correct: 0
     },
     {
         question: "Jak zapisywana jest funkcja bez parametrów w języku C?",
@@ -172,91 +127,33 @@
         correct: 1
     },
     {
-        question: "Które wyrażenie służy do konwersji typu zmiennej na float?",
-        answers: ["int", "(float)", "double", "char"],
+        question: "Ile razy wykona się pętla while: int i = 0; while(i < 5) { i += 2; }?",
+        answers: ["2", "3", "4", "5"],
         correct: 1
     },
     {
-        question: "Wskaż przykład operatora przyrostkowego w C:",
-        answers: ["+", "--", "%", "/"],
+        question: "Jakie jest domyślne rozszerzenie pliku wynikowego w Unix?",
+        answers: [".exe", ".out", ".c", ".obj"],
         correct: 1
     },
     {
-        question: "Jaki wynik daje int a = 5; int b = a++;?",
-        answers: ["a=5, b=6", "a=6, b=6", "a=5, b=5", "a=6, b=5"],
-        correct: 3
-    },
-    {
-        question: "Który zapis wskazuje na poprawne użycie pętli do…while?",
-        answers: ["while (wyrażenie) do { instrukcja; }", "do { instrukcja; } while (wyrażenie);", "do { instrukcja; }", "while (wyrażenie) { instrukcja; }"],
+        question: "Które wyrażenie poprawnie deklaruje zmienną typu float?",
+        answers: ["int zmienna = 3.14;", "float zmienna = 3.14;", "char zmienna = 3.14;", "double zmienna = 3.14;"],
         correct: 1
     },
     {
-        question: "Co robi pow(x, y) w bibliotece <math.h>?",
-        answers: ["Oblicza x do potęgi y", "Oblicza pierwiastek y-tego stopnia z x", "Zwraca wartość bezwzględną x", "Nic, nie jest to funkcja z &lt;math.h>"],
-        correct: 0
+        question: "Co wykonuje operator logiczny '&&'?",
+        answers: ["Albo jedno, albo drugie wyrażenie jest prawdziwe", "Oba wyrażenia są fałszywe", "Oba wyrażenia są prawdziwe", "Jedno wyrażenie jest fałszywe"],
+        correct: 2
     },
     {
-        question: "Co jest rezultatem wyrażenia (float) 5 / 2?",
-        answers: ["2", "2.5", "2.0", "3"],
-        correct: 1
+        question: "Jaką wartość przyjmuje zmienna logiczna, gdy warunek jest fałszywy?",
+        answers: ["1", "True", "0", "False"],
+        correct: 2
     },
     {
-        question: "Który operator relacyjny oznacza „większe lub równe”?",
-        answers: ["<=", ">=", "==", "!="],
-        correct: 1
-    },
-    {
-        question: "Który symbol w C jest używany do tworzenia komentarzy jednoliniowych?",
-        answers: ["//", "/* */", "#", "--"],
-        correct: 0
-    },
-    {
-        question: "Która funkcja służy do wyświetlania tekstu na ekranie?",
-        answers: ["scanf", "printf","display", "print"], correct: 1 
-    },
-    { question: "Jaki wynik daje operacja 7 % 3?",
-     answers: ["1", "2", "3", "0"],
-     correct: 0
-    },
-    {
-        question: "Która instrukcja służy do wczytywania wartości z klawiatury?",
-        answers: ["printf", "scanf", "cin", "read"],
-        correct: 1 
-    }, 
-    {
-        question: "Jak nazywa się operator logiczny OR?",
-        answers: ["&&", "||", "!", "%"],
-        correct: 1
-    },
-    {
-        question: "Jaki zakres wartości przechowuje zmienna typu char?",
-        answers: ["-128 do 127", "-32768 do 32767", "-2147483648 do 2147483647", "0 do 255"],
-        correct: 0
-    },
-    {
-        question: "Jak zapisuje się liczbę szesnastkową w języku C?",
-        answers: ["0x przed liczbą", "0 przed liczbą", "H przed liczbą", "# przed liczbą"],
-        correct: 0
-    },
-    {
-    question: "Które wyrażenie poprawnie deklaruje zmienną typu float?",
-    answers: ["int zmienna = 3.14;", "float zmienna = 3.14;", "char zmienna = 3.14;", "double zmienna = 3.14;"],
-    correct: 1 
-    },
-    {
-        question: "Który zapis rzutuje zmienną int na float?",
-        answers: ["(float) zmienna", "(int) zmienna", "(double) zmienna", "(char) zmienna"],
-        correct: 0 
-    },
-    {
-        question: "Co oznacza słowo kluczowe 'extern' w języku C?",
-        answers: ["Zmienne tylko lokalne", "Zmienna zdefiniowana w innym pliku", "Zmienna globalna", "Stała"],
-        correct: 1
-    },
-    {
-        question: "Który zapis jest poprawny dla komentarza wieloliniowego?",
-        answers: ["// komentarz", "/* komentarz */", "# komentarz", "&lt;!-- komentarz --&rt;"],
+        question: "Co wykonuje funkcja scanf?",
+        answers: ["Drukuje tekst na ekranie", "Pobiera dane wejściowe z klawiatury i przekształca je według formatu", "Wykonuje operacje na plikach", "Tworzy tablicę danych"],
         correct: 1
     },
     {
@@ -270,68 +167,43 @@
         correct: 0
     },
     {
-        question: "Która funkcja zamienia liczbę całkowitą na string?",
-        answers: ["itoa", "atoi", "atof", "strint"],
+        question: "Które z poniższych słów nie jest słowem kluczowym w C?",
+        answers: ["while", "float", "define", "for"],
+        correct: 2
+    },
+    {
+        question: "Jaka jest wartość arr[2] w tablicy int arr[5] = {1, 2, 3, 4, 5};?",
+        answers: ["1", "2", "3", "4"],
+        correct: 2
+    },
+    {
+        question: "Która funkcja umożliwia pobranie liczby całkowitej z tekstu?",
+        answers: ["atof", "atoi", "scanf", "getchar"],
+        correct: 1
+    },
+    {
+        question: "Które wyrażenie opisuje poprawny sposób zdefiniowania stałej symbolicznej?",
+        answers: ["const int liczba = 10;", "#define LICZBA 10", "int liczba = 10;", "const #define liczba 10"],
+        correct: 1
+    },
+    {
+        question: "Który operator wykonuje 'bitowe OR'?",
+        answers: ["||", "&&", "|", "&"],
+        correct: 2
+    },
+    {
+        question: "Co zwraca funkcja malloc(), jeśli alokacja pamięci się nie powiedzie?",
+        answers: ["1", "0", "NULL", "-1"],
+        correct: 2
+    },
+    {
+        question: "Jaki zakres ma zmienna typu char?",
+        answers: ["-128 do 127", "-32768 do 32767", "-2147483648 do 2147483647", "0 do 255"],
         correct: 0
     },
     {
-        question: "Jakiego rozszerzenia używamy dla plików w języku C?",
-        answers: [".txt", ".cpp", ".exe", ".c"],
-        correct: 3
-    },
-    {
-        question: "Instrukcja break jest używana do:",
-        answers: ["Kończenia pętli", "Kończenia programu", "Przejścia do następnej iteracji", "Deklaracji zmiennej"],
-        correct: 0
-    },
-    {
-        question: "Funkcja getchar() służy do:",
-        answers: ["Odczytu liczby całkowitej", "Odczytu jednego znaku z wejścia", "Wprowadzania danych", "Kończenia programu"],
-        correct: 1
-    },
-    {
-        question: "Czy można zmienić wartość zmiennej zadeklarowanej jako const?",
-        answers: ["Tak", "Tylko przez funkcję", "Nie", "Tylko w pętli"],
-        correct: 2
-    },
-    {
-        question: "Co oznacza 'void' przy deklaracji funkcji?",
-        answers: ["Nie zwraca żadnej wartości", "Ma jedno zero jako wartość", "Zwraca int", "Jest zmienną lokalną"],
-        correct: 0
-    },
-    {
-        question: "Operator '+' w języku C:",
-        answers: ["Mnoży wartości", "Dodaje wartości", "Jest logiczny", "Porównuje wartości"],
-        correct: 1
-    },
-    {
-        question: "Jakiego typu wynikiem jest wyrażenie '5 / 2'?",
-        answers: ["2.5", "float", "int", "double"],
-        correct: 2
-    },
-    {
-        question: "Który typ zmiennej pozwala przechowywać pojedynczy znak?",
-        answers: ["int", "char", "float", "double"],
-        correct: 1
-    },
-    {
-        question: "Do wywołania której funkcji potrzebna jest biblioteka <math.h>?",
-        answers: ["printf", "scanf", "sin", "putchar"],
-        correct: 2
-    },
-    {
-        question: "Kiedy używamy 'continue' w pętli?",
-        answers: ["Aby zakończyć pętlę", "Aby zresetować zmienne", "Aby przejść do kolejnej iteracji", "Aby przerwać pętlę"],
-        correct: 2
-    },
-    {
-        question: "Co zwraca operator '==' w przypadku porównania nierównych wartości?",
-        answers: ["1", "0", "True", "False"],
-        correct: 1
-    },
-    {
-        question: "Czy 'int *ptr;' to wskaźnik?",
-        answers: ["Tak", "Nie", "Jest zmienną", "Jest tablicą"],
+        question: "Jaki wynik daje operacja 7 % 3?",
+        answers: ["1", "2", "3", "0"],
         correct: 0
     },
     {
@@ -340,141 +212,204 @@
         correct: 1
     },
     {
-        question: "Który operator służy do przypisania?",
-        answers: ["==", "=", "<=", "++"],
-        correct: 1
-    },
-    {
-        question: "Który operator oznacza resztę z dzielenia?",
-        answers: ["%", "/", "//", "||"],
+        question: "Jak zapisuje się liczbę szesnastkową w języku C?",
+        answers: ["0x przed liczbą", "0 przed liczbą", "H przed liczbą", "# przed liczbą"],
         correct: 0
     },
     {
-        question: "Jaką wartość przyjmuje zmienna logiczna, gdy warunek jest fałszywy?",
-        answers: ["1", "True", "0", "False"],
-        correct: 2
-    },
-    {
-        question: "Który typ zmiennej nie przechowuje liczb zmiennoprzecinkowych?",
-        answers: ["float", "double", "char", "long double"],
-        correct: 2
-    },
-    {
-        question: "Który typ danych posiada najmniejszy rozmiar?",
-        answers: ["int", "char", "float", "double"],
+        question: "Które wyrażenie służy do konwersji typu zmiennej na float?",
+        answers: ["int", "(float)", "double", "char"],
         correct: 1
     },
     {
-        question: "Ile bitów zajmuje typ 'int' na 32-bitowym systemie?",
-        answers: ["8", "16", "32", "64"],
-        correct: 2
-    },
-    {
-        question: "Jakie rozszerzenie ma plik nagłówkowy w języku C?",
-        answers: [".c", ".h", ".cpp", ".exe"],
-        correct: 1
-    },
-    {
-        question: "Co oznacza 'static' w deklaracji zmiennej?",
-        answers: ["Zmienne lokalne", "Zmienne globalne", "Zachowuje wartość po zakończeniu funkcji", "Nie można jej zmieniać"],
-        correct: 2
-    },
-    {
-        question: "Funkcja sprintf działa na:",
-        answers: ["Plikach", "Tablicach znaków", "Całych liczbach", "Zmiennej float"],
-        correct: 1
-    },
-    {
-        question: "Co wykonuje operator logiczny '&&'?",
-        answers: ["Albo jedno, albo drugie wyrażenie jest prawdziwe", "Oba wyrażenia są fałszywe", "Oba wyrażenia są prawdziwe", "Jedno wyrażenie jest fałszywe"],
-        correct: 2
-    },
-    {
-        question: "Jakie jest domyślne rozszerzenie pliku wynikowego w Unix?",
-        answers: [".exe", ".out", ".c", ".obj"],
-        correct: 1
-    },
-    {
-        question: "Co oznacza pojęcie 'przeciążenie funkcji'?",
-        answers: ["Definiowanie wielu funkcji o tej samej nazwie", "Definiowanie funkcji z innym typem zwracanym", "Tworzenie kopii zmiennej", "Wywołanie funkcji z różnymi argumentami"],
-        correct: 0
-    },
-    {
-        question: "Operator '?' służy do:",
-        answers: ["Instrukcji warunkowej", "Przypisania", "Pętli", "Deklaracji"],
-        correct: 0
-    },
-    {
-        question: "Wskaźnik na typ int zajmuje:",
-        answers: ["4 bajty", "2 bajty", "1 bajt", "8 bajtów"],
-        correct: 0
-    },
-    {
-        question: "Jak zapisujemy liczby ósemkowe w języku C?",
-        answers: ["0x przed liczbą", "O przed liczbą", "0 przed liczbą", "B przed liczbą"],
-        correct: 2
-    },
-    {
-        question: "Funkcja malloc() zwraca wskaźnik na:",
-        answers: ["Zmienną", "Tablicę", "Liczbę całkowitą", "Zarezerwowaną pamięć"],
+        question: "Które wyrażenie wykonuje operację przypisania?",
+        answers: ["==", "<=", ">=", "="],
         correct: 3
     },
     {
-        question: "Jaką wartość zwraca funkcja malloc(), jeśli alokacja pamięci się nie powiedzie?",
-        answers: ["1", "0", "NULL", "-1"],
-        correct: 2
-    },
-    {
-        question: "Która funkcja jest używana do zwalniania dynamicznie przydzielonej pamięci?",
-        answers: ["free", "delete", "malloc", "remove"],
+        question: "Jakie wartości będą w tablica po wykonaniu: int tablica[5] = {0};?",
+        answers: ["0 dla wszystkich elementów", "1 dla wszystkich elementów", "Nieokreślone", "5 dla każdego elementu"],
         correct: 0
     },
     {
-        question: "Który operator wykonuje 'bitowe OR'?",
-        answers: ["||", "&&", "|", "&"],
-        correct: 2
-    },
-    {
-        question: "Który typ zmiennej można użyć do przechowywania długiej liczby całkowitej?",
-        answers: ["short int", "long int", "float", "char"],
-        correct: 1
-    },
-    {
-        question: "Który z poniższych operatorów jest operatorem bitowym?",
-        answers: ["==", "&", "||", "!"],
-        correct: 1
-    },
-    {
-        question: "Który zapis rzutuje zmienną float na int?",
-        answers: ["int(x)", "(int)x", "(float)x", "(char)x"],
-        correct: 1
-    },
-    {
-        question: "Która biblioteka zawiera funkcje do operacji na plikach?",
-        answers: ["stdio.h", "math.h", "stdlib.h", "conio.h"],
+        question: "Jaka wartość znajduje się w tablica[2] po wykonaniu kodu: int tablica[3] = {5, 6};?",
+        answers: ["0", "5", "6", "Błąd"],
         correct: 0
     },
     {
-        question: "Która funkcja zamienia liczbę zmiennoprzecinkową na liczbę całkowitą?",
-        answers: ["atoi", "atof", "int", "floor"],
+        question: "Co wyświetli poniższy kod? int i; for (i = 1; i <= 5; i++) { if (i == 3) break; printf(\"%d \", i); }",
+        answers: ["1 2 3 4 5", "1 2", "3", "1 2 3"],
+        correct: 1
+    },
+    {
+        question: "Jaka jest wartość tablica[1][1] po wykonaniu kodu: int tablica[2][2] = {{1, 2}, {3, 4}};?",
+        answers: ["2", "1", "4", "3"],
+        correct: 2
+    },
+    {
+        question: "Jaka jest różnica między operatorem ++i i i++?",
+        answers: ["Brak różnicy", "++i zwiększa i przed użyciem, i++ po użyciu", "i++ jest szybszy", "i++ zwiększa przed użyciem, ++i po użyciu"],
+        correct: 1
+    },
+    {
+        question: "Jaka jest wartość zmiennej wynik po wykonaniu kodu: int a = 5; wynik = a++ + ++a;?",
+        answers: ["11", "12", "13", "10"],
+        correct: 2
+    },
+    {
+        question: "Jakiego typu wynik zwraca operator sizeof?",
+        answers: ["char", "int", "unsigned long", "float"],
+        correct: 2
+    },
+    {
+        question: "Jakiego wyniku można oczekiwać po wykonaniu kodu: int a = 10; int *ptr = &a; printf(\"%d\", *ptr);?",
+        answers: ["10", "adres zmiennej a", "wskaźnik do zmiennej a", "Błąd kompilacji"],
+        correct: 0
+    },
+    {
+        question: "Która z poniższych pętli jest używana, gdy liczba iteracji jest znana?",
+        answers: ["while", "do...while", "for", "każda z powyższych"],
+        correct: 2
+    },
+    {
+        question: "Które z poniższych wyrażeń nie jest poprawnym zapisem przypisania wartości wskaźnikowi?",
+        answers: ["int *ptr = NULL;", "int *ptr = 0;", "int ptr = NULL;", "int *ptr = &zmienna;"],
+        correct: 2
+    },
+    {
+        question: "Ile bajtów zajmuje typ danych float na większości systemów?",
+        answers: ["2", "4", "8", "16"],
+        correct: 1
+    },
+    {
+        question: "Co zwraca funkcja strcmp()?",
+        answers: ["Wynik porównania dwóch stringów", "Długość stringa", "Pozycję znaku w stringu", "Nic nie zwraca"],
+        correct: 0
+    },
+    {
+        question: "Jak działa operator logiczny || (OR)?",
+        answers: ["Zwraca true tylko, gdy oba warunki są prawdziwe", "Zwraca false tylko, gdy oba warunki są fałszywe", "Zwraca true, gdy jeden z warunków jest fałszywy", "Zwraca false, gdy jeden z warunków jest prawdziwy"],
+        correct: 1
+    },
+    {
+        question: "Która z poniższych funkcji alokuje pamięć?",
+        answers: ["printf()", "malloc()", "sizeof()", "strlen()"],
+        correct: 1
+    },
+    {
+        question: "Jaki wynik zwróci operacja: int wynik = 8 >> 2;?",
+        answers: ["2", "4", "16", "8"],
+        correct: 1
+    },
+    {
+        question: "Które wyrażenie służy do zamiany małych liter na duże w stringu?",
+        answers: ["strcat()", "strstr()", "toupper()", "strrev()"],
+        correct: 2
+    },
+    {
+        question: "Jaką wartość przyjmuje element tablica[4] w tablicy int tablica[5] = {10, 20};?",
+        answers: ["0", "20", "10", "Nieokreślona wartość"],
+        correct: 0
+    },
+    {
+        question: "Ile razy wykonana zostanie pętla: for(int i = 1; i < 10; i += 2)?",
+        answers: ["3", "5", "9", "10"],
+        correct: 1
+    },
+    {
+        question: "Co wykonuje instrukcja continue?",
+        answers: ["Kończy program", "Przerywa iterację i kontynuuje od początku", "Wychodzi z pętli", "Zatrzymuje wykonanie programu"],
+        correct: 1
+    },
+    {
+        question: "Który zapis definiuje dynamiczną tablicę wskaźników?",
+        answers: ["int *tablica[10];", "int tablica[10];", "int *tablica = malloc(10 * sizeof(int));", "int tablica = {0};"],
+        correct: 2
+    },
+    {
+        question: "Który operator zwraca wartość przedrostka zmiennej?",
+        answers: ["++", "--", "pre", "None"],
+        correct: 0
+    },
+    {
+        question: "Jaką wartość wyświetli poniższy kod? int i = 5; int j = i++; printf(\"%d\", j);",
+        answers: ["6", "5", "0", "Błąd"],
+        correct: 1
+    },
+    {
+        question: "Co zwraca poniższa funkcja dla pustego stringa: strlen(\"\");?",
+        answers: ["0", "1", "Nieokreślona wartość", "Błąd kompilacji"],
+        correct: 0
+    },
+    {
+        question: "Która funkcja w C pozwala formatować wyjście na ekran?",
+        answers: ["scanf()", "printf()", "putchar()", "getchar()"],
+        correct: 1
+    },
+    {
+        question: "Jakiej instrukcji należy użyć, by zdefiniować pętlę nieskończoną?",
+        answers: ["for(;;)", "while(1)", "do...while", "Opcje A i B"],
         correct: 3
     },
     {
-        question: "Jaki jest wynik 5 & 3?",
-        answers: ["5", "3", "1", "7"],
-        correct: 2
+        question: "Co jest wynikiem operacji logicznej 'true && false'?",
+        answers: ["true", "false", "1", "Błąd kompilacji"],
+        correct: 1
     },
     {
-        question: "Która z poniższych opcji to poprawna deklaracja funkcji bez parametrów?",
-        answers: ["void funkcja();", "int funkcja[10];", "double funkcja();", "char funkcja;"],
+        question: "Która funkcja usuwa pamięć zaalokowaną przez malloc?",
+        answers: ["delete()", "free()", "clear()", "remove()"],
+        correct: 1
+    },
+    {
+        question: "Jak można zainicjalizować tablicę dwuwymiarową w C?",
+        answers: ["int tab[2][2] = {{1, 2}, {3, 4}};", "int tab = {1, 2, 3, 4};", "int tab[2] = {1, 2};", "int tab[2][2] = {1, 2, 3, 4};"],
         correct: 0
     },
     {
-        question: "Do jakiego typu danych przypisujemy adresy?",
-        answers: ["long int", "int", "float", "pointer"],
-        correct: 3
-    }
-];
+        question: "Jaką wartość ma element tablica[2] w tablicy: int tablica[3] = {1, 2, 3};?",
+        answers: ["1", "2", "3", "Błąd kompilacji"],
+        correct: 2
+    },
+    {
+        question: "Które wyrażenie sprawdzi, czy wskaźnik p jest pusty?",
+        answers: ["p == NULL", "p == 0", "p", "p == -1"],
+        correct: 0
+    },
+    {
+        question: "Co wyświetli poniższy kod: int a = 3; int b = a << 1; printf(\"%d\", b);?",
+        answers: ["6", "3", "1", "Błąd kompilacji"],
+        correct: 0
+    },
+    {
+        question: "Ile elementów mieści się w tablicy int tablica[4];?",
+        answers: ["3", "4", "5", "Nieokreślona liczba"],
+        correct: 1
+    },
+    {
+        question: "Jaką wartość zwróci: int a = 10; printf(\"%d\", a++);?",
+        answers: ["10", "11", "9", "Błąd kompilacji"],
+        correct: 0
+    },
+    {
+        question: "Co oznacza wyrażenie &var?",
+        answers: ["Zwraca wartość zmiennej", "Zwraca adres pamięci zmiennej", "Zwraca typ zmiennej", "Zwraca pierwszy bajt zmiennej"],
+        correct: 1
+    },
+    {
+        question: "Który z poniższych operatorów jest operatorem logicznym?",
+        answers: ["&", "|", "||", "=="],
+        correct: 2
+    },
+    {
+        question: "Który z poniższych operatorów jest operatorem inkrementacji?",
+        answers: ["++", "--", "==", "//"],
+        correct: 0
+    },
+    {
+        question: "Ile razy wykona się poniższa pętla: for(int i = 0; i < 5; i++)?", answers: ["4", "5", "6", "Zależy od warunku"], correct: 1 }, { question: "Co wyświetli poniższy kod: int i = 0; while(i < 3) { printf("%d ", i++); }?", answers: ["0 1 2", "0 1 2 3", "1 2 3", "Błąd kompilacji"], correct: 0 }, { question: "Jaką wartość ma zmienna x po wykonaniu kodu: int x = 5; x += 2;", answers: ["5", "7", "2", "Błąd"], correct: 1 }, { question: "Jakie będą elementy tablicy: int tab[3] = {1, 2};?", answers: ["1, 2, 0", "1, 2, 1", "1, 2, -1", "Błąd kompilacji"], correct: 0 }, { question: "Jakie są wyniki działania operatora %?", answers: ["Zwraca resztę z dzielenia", "Zwraca iloraz", "Zwraca wartość logiczną", "Zwraca pierwszą wartość"], correct: 0 }, { question: "Co zrobi poniższy kod? if (x > 10) { printf("Duży"); } else { printf("Mały"); }", answers: ["Zwróci 'Duży' jeśli x > 10", "Zwróci 'Mały' jeśli x > 10", "Nie wyświetli nic", "Błąd kompilacji"], correct: 0 }, { question: "Co wykonuje poniższy kod: for(int i = 0; i < 10; i++) { if (i == 5) break; }?", answers: ["Pętla wykona się 5 razy", "Pętla wykona się 10 razy", "Błąd kompilacji", "Pętla nie wykona się wcale"], correct: 0 }, { question: "Jakie wartości mogą przyjąć zmienne typu bool w C?", answers: ["1 lub 0", "true lub false", "Dowolną wartość", "true, false, NULL"], correct: 0 }, { question: "Jaki typ zwraca funkcja main() w C?", answers: ["int", "void", "float", "char"], correct: 0 }, { question: "Co oznacza instrukcja return 0 w funkcji main()?", answers: ["Zakończenie programu z sukcesem", "Błąd programu", "Kończenie funkcji", "Zwracanie wartości NULL"], correct: 0 }, { question: "Jak można zadeklarować zmienną wskaźnikową w C?", answers: ["int *ptr;", "int &ptr;", "int ptr;", "ptr: int;"], correct: 0 } ];
+
+
 
                 // Losowo wybieramy 10 pytań raz, aby były stałe przez cały quiz
         const randomQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 10);
