@@ -50,7 +50,7 @@
     <div id="result"></div>
 
     <script>
-     const questions = [
+const questions = [
     {
         question: "Kto zdefiniował język C?",
         answers: ["Dennis Ritchie i Brian Kernighan", "Alan Turing i John von Neumann", "Linus Torvalds i Bill Gates", "Steve Jobs i Steve Wozniak"],
@@ -62,7 +62,7 @@
         correct: 1
     },
     {
-        question: "Ile razy wykona się pętla for: for(int i = 0; i < 10; i++)?",
+        question: "Ile razy wykona się pętla for: <pre><code class=\"language-c\">for(int i = 0; i < 10; i++)</code></pre>?",
         answers: ["10", "9", "11", "Nie wykona się ani razu"],
         correct: 0
     },
@@ -92,7 +92,7 @@
         correct: 2
     },
     {
-        question: "Co wykonuje pętla while: while(1) {}?",
+        question: "Co wykonuje pętla while: <pre><code class=\"language-c\">while(1) {}</code></pre>?",
         answers: ["Wykonuje się bez końca", "Wykona się raz", "Wykona się 0 razy", "Wykona się do napotkania błędu"],
         correct: 0
     },
@@ -118,7 +118,7 @@
     },
     {
         question: "Który zapis jest poprawny dla komentarza wieloliniowego?",
-        answers: ["// komentarz", "/* komentarz */", "# komentarz", "&lt;!-- komentarz --&rt;"],
+        answers: ["// komentarz", "<pre><code class=\"language-c\">/* komentarz */</code></pre>", "# komentarz", "&lt;!-- komentarz --&gt;"],
         correct: 1
     },
     {
@@ -127,7 +127,7 @@
         correct: 1
     },
     {
-        question: "Ile razy wykona się pętla while: int i = 0; while(i < 5) { i += 2; }?",
+        question: "Ile razy wykona się pętla while: <pre><code class=\"language-c\">int i = 0; while(i < 5) { i += 2; }</code></pre>?",
         answers: ["2", "3", "4", "5"],
         correct: 1
     },
@@ -172,7 +172,7 @@
         correct: 2
     },
     {
-        question: "Jaka jest wartość arr[2] w tablicy int arr[5] = {1, 2, 3, 4, 5};?",
+        question: "Jaka jest wartość arr[2] w tablicy <pre><code class=\"language-c\">int arr[5] = {1, 2, 3, 4, 5};</code></pre>?",
         answers: ["1", "2", "3", "4"],
         correct: 2
     },
@@ -232,17 +232,22 @@
         correct: 0
     },
     {
-        question: "Jaka wartość znajduje się w tablica[2] po wykonaniu kodu: int tablica[3] = {5, 6};?",
+        question: 'Jaka wartość znajduje się w tablica[2] po wykonaniu kodu: <pre><code class="language-c">int tablica[3] = {5, 6};</code></pre>?',
         answers: ["0", "5", "6", "Błąd"],
         correct: 0
     },
     {
-        question: "Co wyświetli poniższy kod? int i; for (i = 1; i <= 5; i++) { if (i == 3) break; printf(\"%d \", i); }",
+        question: ```Co wyświetli poniższy kod?<pre><code class="language-c">int i; 
+        for (i = 1; i <= 5; i++) { 
+        if (i == 3) 
+        break; 
+        printf(\"%d \", i);
+        }</code></pre>```,
         answers: ["1 2 3 4 5", "1 2", "3", "1 2 3"],
         correct: 1
     },
     {
-        question: "Jaka jest wartość tablica[1][1] po wykonaniu kodu: int tablica[2][2] = {{1, 2}, {3, 4}};?",
+        question: 'Jaka jest wartość tablica[1][1] po wykonaniu kodu: <pre><code class="language-c">int tablica[2][2] = {{1, 2}, {3, 4}};</pre></code>?',
         answers: ["2", "1", "4", "3"],
         correct: 2
     },
@@ -508,3 +513,10 @@
         loadQuiz();
     </script>
 </body></html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+<script>hljs.highlightAll();</script>
