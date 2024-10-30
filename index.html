@@ -475,7 +475,8 @@
         correct: 3
     }
 ];
-// Losowo wybieramy 10 pytań raz, aby były stałe przez cały quiz
+
+                // Losowo wybieramy 10 pytań raz, aby były stałe przez cały quiz
         const randomQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 10);
 
         // Wczytanie quizu na stronę
@@ -493,24 +494,32 @@
                         </label><br>
                     `;
                 });
+                questionEl.innerHTML += `<p class="answer-feedback" id="feedback${index}"></p>`;
                 quizContainer.appendChild(questionEl);
             });
         }
 
         // Funkcja do sprawdzania odpowiedzi i wyświetlania wyników
         function checkAnswers() {
-            const quizContainer = document.getElementById("quiz-container");
             let score = 0;
-            quizContainer.querySelectorAll(".question").forEach((questionEl, index) => {
-                const selected = questionEl.querySelector(`input[name="question${index}"]:checked`);
-                const question = randomQuestions[index];
+
+            randomQuestions.forEach((question, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                const feedbackEl = document.getElementById(`feedback${index}`);
                 
-                if (selected && parseInt(selected.value) === question.correct) {
-                    score++;
-                    questionEl.classList.add("correct");
+                if (selected) {
+                    const selectedAnswer = parseInt(selected.value);
+                    if (selectedAnswer === question.correct) {
+                        score++;
+                        feedbackEl.innerText = "Odpowiedź prawidłowa!";
+                        feedbackEl.className = "answer-feedback correct";
+                    } else {
+                        feedbackEl.innerText = `Nieprawidłowa odpowiedź. Poprawna: ${question.answers[question.correct]}`;
+                        feedbackEl.className = "answer-feedback incorrect";
+                    }
                 } else {
-                    questionEl.classList.add("incorrect");
-                    questionEl.innerHTML += `<p class="correct">Poprawna odpowiedź: ${question.answers[question.correct]}</p>`;
+                    feedbackEl.innerText = "Nie wybrano odpowiedzi.";
+                    feedbackEl.className = "answer-feedback incorrect";
                 }
             });
             document.getElementById("result").innerText = `Twój wynik to: ${score} / 10`;
@@ -518,5 +527,4 @@
 
         loadQuiz();
     </script>
-</body>
-</html>
+</body></html>
