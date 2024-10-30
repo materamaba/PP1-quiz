@@ -435,7 +435,7 @@ const questions = [
         correct: 1
     },
     {
-        question: "Jakie będą elementy tablicy: int tab[3] = {1, 2};?",
+        question: 'Jakie będą elementy tablicy: <pre><code class="language-c">int tab[3] = {1, 2};</pre></code>',
         answers: ["1, 2, 0", "1, 2, 1", "1, 2, -1", "Błąd kompilacji"],
         correct: 0
     }, {
@@ -443,11 +443,19 @@ const questions = [
         answers: ["Zwraca resztę z dzielenia", "Zwraca iloraz", "Zwraca wartość logiczną", "Zwraca pierwszą wartość"],
         correct: 0 
     }, {
-        question: 'Co zrobi poniższy kod? if (x > 10) { printf("Duży"); } else { printf("Mały"); }',
+        question: `Co zrobi poniższy kod?
+        <pre><code class="language-c">if (x > 10) { 
+            printf("Duży"); 
+        } else { 
+        printf("Mały");
+        }</pre></code>`,
         answers: ["Zwróci 'Duży' jeśli x > 10", "Zwróci 'Mały' jeśli x > 10", "Nie wyświetli nic", "Błąd kompilacji"],
         correct: 0
     }, {
-        question: "Co wykonuje poniższy kod: for(int i = 0; i < 10; i++) { if (i == 5) break; }?",
+        question: `Co wykonuje poniższy kod: 
+        <pre><code class="language-c">for(int i = 0; i < 10; i++) { 
+            if (i == 5) break;
+            }</pre></code>`,
         answers: ["Pętla wykona się 5 razy", "Pętla wykona się 10 razy", "Błąd kompilacji", "Pętla nie wykona się wcale"],
         correct: 0
     }, {
