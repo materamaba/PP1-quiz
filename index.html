@@ -479,6 +479,7 @@
             return shuffled.slice(0, 10);
         }
 
+        // Wczytanie quizu na stronę
         function loadQuiz() {
             const quizContainer = document.getElementById("quiz-container");
             const randomQuestions = getRandomQuestions();
@@ -496,15 +497,23 @@
                 });
                 quizContainer.appendChild(questionEl);
             });
+            window.randomQuestions = randomQuestions; // Przechowanie losowych pytań do sprawdzenia
         }
 
+        // Funkcja do sprawdzania odpowiedzi i wyświetlania wyników
         function checkAnswers() {
-            const randomQuestions = getRandomQuestions();
+            const quizContainer = document.getElementById("quiz-container");
             let score = 0;
-            randomQuestions.forEach((q, index) => {
-                const selected = document.querySelector(`input[name="question${index}"]:checked`);
-                if (selected && parseInt(selected.value) === q.correct) {
+            quizContainer.querySelectorAll(".question").forEach((questionEl, index) => {
+                const selected = questionEl.querySelector(`input[name="question${index}"]:checked`);
+                const question = randomQuestions[index];
+                
+                if (selected && parseInt(selected.value) === question.correct) {
                     score++;
+                    questionEl.classList.add("correct");
+                } else {
+                    questionEl.classList.add("incorrect");
+                    questionEl.innerHTML += `<p class="correct">Poprawna odpowiedź: ${question.answers[question.correct]}</p>`;
                 }
             });
             document.getElementById("result").innerText = `Twój wynik to: ${score} / 10`;
