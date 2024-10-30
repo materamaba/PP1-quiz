@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz z Podstaw Programowania w C</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; }
+        .question { margin-bottom: 15px; }
+        button { padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Quiz z Podstaw Programowania w C</h1>
+    <div id="quiz-container"></div>
+    <button onclick="checkAnswers()">Sprawdź odpowiedzi</button>
+    <div id="result"></div>
+
+    <script>
+        const questions = [
+            {
+                question: "Kto zdefiniował język C?",
+                answers: ["Dennis Ritchie i Brian Kernighan", "Alan Turing i John von Neumann", "Linus Torvalds i Bill Gates", "Steve Jobs i Steve Wozniak"],
+                correct: 0
+            },
+            {
+                question: "Który znak nie jest znakiem specjalnym w języku C?",
+                answers: ["%", "@", "&", "#"],
+                correct: 1
+            },
+            {
+                question: "W którym roku wprowadzono standard ANSI C?",
+                answers: ["1978", "1989", "1999", "2005"],
+                correct: 1
+            },
+            // Dodaj kolejne pytania
+        ];
+
+        function getRandomQuestions() {
+            const shuffled = questions.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, 10);
+        }
+
+        function loadQuiz() {
+            const quizContainer = document.getElementById("quiz-container");
+            const randomQuestions = getRandomQuestions();
+            randomQuestions.forEach((q, index) => {
+                const questionEl = document.createElement("div");
+                questionEl.className = "question";
+                questionEl.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+                q.answers.forEach((answer, i) => {
+                    questionEl.innerHTML += `
+                        <label>
+                            <input type="radio" name="question${index}" value="${i}">
+                            ${answer}
+                        </label><br>
+                    `;
+                });
+                quizContainer.appendChild(questionEl);
+            });
+        }
+
+        function checkAnswers() {
+            const randomQuestions = getRandomQuestions();
+            let score = 0;
+            randomQuestions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && parseInt(selected.value) === q.correct) {
+                    score++;
+                }
+            });
+            document.getElementById("result").innerText = `Twój wynik to: ${score} / 10`;
+        }
+
+        loadQuiz();
+    </script>
+</body>
+</html>
