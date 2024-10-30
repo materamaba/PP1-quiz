@@ -337,7 +337,10 @@ const questions = [
         correct: 0
     },
     {
-        question: "Jaką wartość wyświetli poniższy kod? int i = 5; int j = i++; printf(\"%d\", j);",
+        question: `Jaką wartość wyświetli poniższy kod? 
+        <pre><code class="language-c">int i = 5; 
+        int j = i++; 
+        printf(\"%d\", j);</pre></code>`,
         answers: ["6", "5", "0", "Błąd"],
         correct: 1
     },
@@ -372,7 +375,7 @@ const questions = [
         correct: 0
     },
     {
-        question: "Jaką wartość ma element tablica[2] w tablicy: int tablica[3] = {1, 2, 3};?",
+        question: 'Jaką wartość ma element tablica[2] w tablicy: <pre><code class="language-c">int tablica[3] = {1, 2, 3};</pre></code>?',
         answers: ["1", "2", "3", "Błąd kompilacji"],
         correct: 2
     },
@@ -382,17 +385,20 @@ const questions = [
         correct: 0
     },
     {
-        question: "Co wyświetli poniższy kod: int a = 3; int b = a << 1; printf(\"%d\", b);?",
+        question: `Co wyświetli poniższy kod:
+        <pre><code class="language-c">int a = 3;
+        int b = a << 1; 
+        printf(\"%d\", b);</pre></code>`,
         answers: ["6", "3", "1", "Błąd kompilacji"],
         correct: 0
     },
     {
-        question: "Ile elementów mieści się w tablicy int tablica[4];?",
+        question: 'Ile elementów mieści się w tablicy <pre><code class="language-c">int tablica[4];</pre></code>?',
         answers: ["3", "4", "5", "Nieokreślona liczba"],
         correct: 1
     },
     {
-        question: "Jaką wartość zwróci: int a = 10; printf(\"%d\", a++);?",
+        question: 'Jaką wartość zwróci: <pre><code class="language-c">int a = 10; printf(\"%d\", a++);</pre></code>',
         answers: ["10", "11", "9", "Błąd kompilacji"],
         correct: 0
     },
@@ -412,12 +418,16 @@ const questions = [
         correct: 0
     },
     {
-        question: "Ile razy wykona się poniższa pętla: for(int i = 0; i < 5; i++)?",
+        question: 'Ile razy wykona się poniższa pętla: <pre><code class="language-c">for(int i = 0; i < 5; i++)</pre></code>',
         answers: ["4", "5", "6", "Zależy od warunku"],
         correct: 1
     },
     {
-        question: 'Co wyświetli poniższy kod: int i = 0; while(i < 3) { printf("%d", i++); }?',
+        question: `Co wyświetli poniższy kod:
+        <pre><code class="language-c">int i = 0; 
+        while(i < 3) { 
+        printf("%d", i++); 
+        }</pre></code>`,
         answers: ["0 1 2", "0 1 2 3", "1 2 3", "Błąd kompilacji"], correct: 0 },
     {
         question: "Jaką wartość ma zmienna x po wykonaniu kodu: int x = 5; x += 2;",
