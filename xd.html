@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz z Podstaw Programowania w C</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            background-color: #121212;
+            color: #ffffff;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .question {
+            margin-bottom: 15px;
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .incorrect { color: red; }
+        .correct { color: green; }
+        .answer-feedback { font-weight: bold; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Quiz z Podstaw Programowania w C</h1>
+    <div id="quiz-container"></div>
+    <button onclick="checkAnswers()">Sprawdź odpowiedzi</button>
+    <div id="result"></div>
+
+    <script>
+const questions = [
+    { question: "Jakie cechy wyróżniają język C?", answers: ["Niskie koszty użytkowania", "Efektywność, elastyczność, przenośność", "Łatwość nauki", "Interaktywność"], correct: 1 },
+
+{ question: "W jakim zakresie język C jest efektywny?", answers: ["Programowanie wysokiego poziomu", "Programowanie na niskim poziomie", "Tworzenie stron internetowych", "Programowanie obiektowe"], correct: 1 },
+
+{ question: "Jakie jest główne zastosowanie języka C?", answers: ["Aplikacje mobilne", "Programowanie niskopoziomowe", "Sztuczna inteligencja", "Tworzenie gier"], correct: 1 },
+
+{ question: "Czym język C różni się od asemblera?", answers: ["Jest bardziej przenośny", "Jest wolniejszy", "Jest łatwiejszy w użyciu", "Nie ma różnic"], correct: 0 },
+
+{ question: "Które z poniższych stwierdzeń jest prawdziwe o języku C?", answers: ["Jest tylko do użytku na systemach Windows", "Wykazuje przenośność charakterystyczną dla języków wysokiego poziomu", "Nie pozwala na programowanie niskopoziomowe", "Jest językiem w pełni obiektowym"], correct: 1 },
+
+{ question: "Jakie znaki są częścią alfabetu języka C?", answers: ["Tylko małe litery", "Małe i duże litery, cyfry oraz znaki specjalne", "Tylko cyfry", "Tylko znaki specjalne"], correct: 1 },
+
+{ question: "Który z poniższych znaków nie należy do alfabetu języka C?", answers: ["_", "(", "{", "$"], correct: 3 },
+
+{ question: "Jakie znaki zalicza się do znaków specjalnych w języku C?", answers: ["Tylko cyfry arabskie", "+, -, *, /, =", "Litery alfabetu", "Tylko znaki interpunkcyjne"], correct: 1 },
+
+{ question: "Jakie cyfry są używane w alfabecie języka C?", answers: ["Tylko cyfry rzymskie", "Cyfry arabskie", "Cyfry binarne", "Cyfry heksadecymalne"], correct: 1 },
+
+{ question: "Co oznacza znak '_' w języku C?", answers: ["Jest znakiem specjalnym", "Jest traktowany jako litera", "Nie ma znaczenia", "Jest znakiem końca linii"], correct: 1 },
+
+{ question: "Jakie znaki są częścią alfabetu języka C?", answers: ["Tylko małe litery", "Małe i duże litery, cyfry oraz znaki specjalne", "Tylko cyfry", "Tylko znaki specjalne"], correct: 1 },
+
+{ question: "Który z poniższych znaków nie należy do alfabetu języka C?", answers: ["_</code></pre>", "(</code></pre>", "{</code></pre>", "$</code></pre>"], correct: 3 },
+
+{ question: "Jakie znaki zalicza się do znaków specjalnych w języku C?", answers: ["Tylko cyfry arabskie", "+, -, *, /, =</code></pre>", "Litery alfabetu", "Tylko znaki interpunkcyjne"], correct: 1 },
+
+{ question: "Jakie cyfry są używane w alfabecie języka C?", answers: ["Tylko cyfry rzymskie", "Cyfry arabskie", "Cyfry binarne", "Cyfry heksadecymalne"], correct: 1 },
+
+{ question: "Co oznacza znak '_' w języku C?", answers: ["Jest znakiem specjalnym", "Jest traktowany jako litera", "Nie ma znaczenia", "Jest znakiem końca linii"], correct: 1 },
+
+{ question: "Z czego składa się program w języku C?", answers: ["Z jednej jednostki tłumaczenia", "Z jednej lub więcej jednostek tłumaczenia", "Tylko z plików nagłówkowych", "Z jednego pliku źródłowego"], correct: 1 },
+
+{ question: "Co odbywa się w fazie preprocesora?", answers: ["Kompilacja kodu maszynowego", "Wstępna leksykalna transformacja programu", "Optymalizacja kodu", "Debugowanie programu"], correct: 1 },
+
+{ question: "Jakie wiersze są interpretowane w fazie preprocesora?", answers: ["Te rozpoczynające się znakiem #", "Te zawierające komentarze", "Te z literami w dużej wielkości", "Te kończące się średnikiem"], correct: 0 },
+
+{ question: "Co jest wynikiem fazy preprocesora?", answers: ["Zredukowany program do kodu maszynowego", "Zredukowany do ciągu jednostek leksykalnych", "Gotowy program do uruchomienia", "Plik wykonywalny"], correct: 1 },
+
+{ question: "Jakie działania wykonuje preprocesor?", answers: ["Makrodefinicje i makrorozwinięcia", "Kompilację do kodu maszynowego", "Linkowanie z bibliotekami", "Optymalizację pamięci"], correct: 0 },
+
+{ question: "Ile klas jednostek leksykalnych istnieje w języku C?", answers: ["Cztery", "Pięć", "Sześć", "Siedem"], correct: 2 },
+
+{ question: "Która z poniższych klas nie jest jednostką leksykalną w języku C?", answers: ["Identyfikatory", "Słowa kluczowe", "Typy danych", "Operatory"], correct: 2 },
+
+{ question: "Jakie są klasy jednostek leksykalnych w języku C?", answers: ["Identyfikatory, słowa kluczowe, stałe, napisy, operatory, separatory", "Identyfikatory, zmienne, stałe, napisy, operatory, separatory", "Funkcje, słowa kluczowe, stałe, napisy, operatory, separatory", "Identyfikatory, operatory, zmienne, stałe, pętle, separatory"], correct: 0 },
+
+{ question: "Co oznacza termin 'identyfikator' w kontekście jednostek leksykalnych?", answers: ["Słowo kluczowe", "Nazwa zmiennej lub funkcji", "Typ danych", "Stała"], correct: 1 },
+
+{ question: "Jakie jednostki leksykalne mogą zawierać operatory w języku C?", answers: ["Identyfikatory", "Słowa kluczowe", "Separator", "Napisy"], correct: 0 },
+
+{ question: "Czym jest identyfikator w języku C?", answers: ["Ciąg liter i cyfr zaczynający się od cyfry", "Ciąg liter i cyfr zaczynający się od litery", "Wyłącznie litera", "Wyłącznie cyfra"], correct: 1 },
+
+{ question: "Jakie litery rozróżnia język C w identyfikatorach?", answers: ["Tylko małe litery", "Tylko wielkie litery", "Małe i wielkie litery", "Nie rozróżnia liter"], correct: 2 },
+
+{ question: "Ile znaków może mieć identyfikator?", answers: ["Max 10", "Max 31", "Może być dowolna", "Max 64"], correct: 2 },
+
+{ question: "Jakie znaczenie mają pierwsze znaki identyfikatora wewnętrznego?", answers: ["Tylko ostatnie 5 znaków", "Pierwsze 31 znaków", "Cały identyfikator", "Nie mają znaczenia"], correct: 1 },
+
+{ question: "Jakie ograniczenia dotyczą identyfikatorów o zewnętrznej łączności?", answers: ["Maksymalnie 10 znaków", "Wyłącznie wielkie litery", "Pierwsze 6 znaków bez rozróżniania liter", "Bez ograniczeń długości"], correct: 2 },
+
+{ question: "Jakie litery są używane w słowach kluczowych w języku C?", answers: ["Duże litery", "Małe litery", "Dowolne litery", "Zarówno małe, jak i duże litery"], correct: 1 },
+
+{ question: "Które z poniższych słów jest słowem kluczowym w języku C?", answers: ["myVariable", "float", "data", "function"], correct: 1 },
+
+{ question: "Jakie słowo kluczowe służy do definiowania typów danych w C?", answers: ["case", "if", "typedef", "return"], correct: 2 },
+
+{ question: "Jakie słowo kluczowe służy do kończenia pętli w C?", answers: ["break", "continue", "return", "goto"], correct: 0 },
+
+{ question: "Ile słów kluczowych wymieniono w podanym slajdzie?", answers: ["10", "15", "20", "32"], correct: 2 },
+
+{ question: "Ile rodzajów stałych wyróżnia się w języku C?", answers: ["Trzy", "Cztery", "Pięć", "Sześć"], correct: 1 },
+
+{ question: "Który z poniższych typów nie jest rodzajem stałej w języku C?", answers: ["Całkowite", "Znakowe", "Zmiennopozycyjne", "Tablicowe"], correct: 3 },
+
+{ question: "Jakie stałe reprezentują liczby całkowite?", answers: ["Całkowite", "Zmiennopozycyjne", "Znakowe", "Wyliczeniowe"], correct: 0 },
+
+{ question: "Co charakteryzuje stałe w języku C?", answers: ["Mają różne typy", "Są zawsze liczbami zmiennoprzecinkowymi", "Nie mają typów", "Mogą być tylko całkowite"], correct: 0 },
+
+{ question: "Która z poniższych stałych jest używana do reprezentacji danych tekstowych?", answers: ["Całkowite", "Znakowe", "Zmiennopozycyjne", "Wyliczeniowe"], correct: 1 },
+
+{ question: "Jaką formę ma stała całkowita dziesiętna?", answers: ["Rozpoczyna się cyfrą 0", "Rozpoczyna się cyfrą różną od 0", "Zawiera cyfry 8 i 9", "Zawiera litery a do f"], correct: 1 },
+
+{ question: "Jakie cyfry mogą występować w stałej ósemkowej?", answers: ["0-9, a-f", "0-7", "0-9", "0-8"], correct: 1 },
+
+{ question: "Jakie oznaczenia wskazują na stałą szesnastkową?", answers: ["0o lub 0O", "0b lub 0B", "0x lub 0X", "0d lub 0D"], correct: 2 },
+
+{ question: "Który z przyrostków oznacza typ unsigned?", answers: ["u lub U", "l lub L", "d lub D", "x lub X"], correct: 0 },
+
+{ question: "Jakie czynniki wpływają na typ stałej całkowitej?", answers: ["Postać, wartość i przyrostek", "Tylko wartość", "Tylko postać", "Tylko przyrostek"], correct: 0 },
+
+{ question: "Jak definiuje się stałą znakową w języku C?", answers: ["Jako ciąg znaków w cudzysłowach", "Jako ciąg jednego lub wielu znaków w apostrofach", "Jako ciąg liczb całkowitych", "Jako tablicę znaków"], correct: 1 },
+
+{ question: "Co reprezentuje wartość stałej znakowej zawierającej tylko jeden znak?", answers: ["Wartość numeryczna znaku w zbiorze maszyny", "Tekstową reprezentację znaku", "Kod ASCII znaku", "Nic, jest pusta"], correct: 0 },
+
+{ question: "Od czego zależy wartość stałej wieloznakowej?", answers: ["Zawsze jest stała", "Zależy od implementacji", "Zależy od systemu operacyjnego", "Zawsze jest równa zero"], correct: 1 },
+
+{ question: "Jakie sekwencje można stosować dla wyrażeń znaków, których nie zawierają stałe znakowe?", answers: ["Sekwencje binarne", "Sekwencje specjalne", "Sekwencje ASCII", "Sekwencje dziesiętne"], correct: 1 },
+
+{ question: "Jakim symbolem otaczane są stałe znakowe?", answers: ["Cudzysłowami", "Apostrofami", "Klamrami", "Nawiasami"], correct: 1 },
+
+{ question: "Co oznacza sekwencja specjalna '\n'?", answers: ["Tabulacja pozioma", "Nowy wiersz", "Cofanie", "Nowa strona"], correct: 1 },
+
+{ question: "Jaką funkcję pełni sekwencja '\t'?", answers: ["Nowy wiersz", "Tabulacja pozioma", "Cofanie", "Alarm"], correct: 1 },
+
+{ question: "Co reprezentuje sekwencja '\a'?", answers: ["Cofanie", "Alarm", "Powrót karetki", "Nowa strona"], correct: 1 },
+
+{ question: "Jaką sekwencję stosuje się do wstawienia cudzysłowu?", answers: ["\'", "\"", "\c", "\d"], correct: 1 },
+
+{ question: "Z jakich części składa się stała zmiennopozycyjna?", answers: ["Część całkowita, kropka dziesiętna, część ułamkowa", "Część całkowita, część ułamkowa, litera e lub E", "Część całkowita, kropka dziesiętna, część ułamkowa, litera e lub E, wykładnik potęgi", "Część całkowita, wykładnik potęgi"], correct: 2 },
+
+{ question: "Który z poniższych przyrostków oznacza typ float?", answers: ["f", "d", "l", "F"], correct: 0 },
+
+{ question: "Jakiego znaku można użyć w wykładniku potęgi?", answers: ["Tylko '+'", "Tylko '-' ", "Może być ze znakiem", "Brak znaków"], correct: 2 },
+
+{ question: "Który z przykładów reprezentuje typ double?", answers: ["1.2e5f", "3.85", "1e-2L", "0.5F"], correct: 1 },
+
+{ question: "Jakie elementy są opcjonalne w stałej zmiennopozycyjnej?", answers: ["Część całkowita", "Kropka dziesiętna", "Wykładnik potęgi", "Przyrostek typu"], correct: 3 },
+
+{ question: "Jakiego typu są identyfikatory zadeklarowane jako wyliczniki?", answers: ["float", "double", "int", "char"], correct: 2 },
+
+{ question: "Co oznacza termin 'wyliczniki' w języku C?", answers: ["Typ zmiennoprzecinkowy", "Typ całkowity", "Słowa kluczowe", "Stałe znakowe"], correct: 1 },
+
+{ question: "Jakie wartości mogą przyjmować wyliczniki?", answers: ["Tylko wartości zmiennoprzecinkowe", "Tylko wartości całkowite", "Każde liczby całkowite", "Każde liczby rzeczywiste"], correct: 1 },
+
+{ question: "Czy wyliczniki mogą być używane do definiowania stałych?", answers: ["Tak, są stałymi", "Nie, są zmiennymi", "Tak, ale tylko w funkcjach", "Nie, są tylko typami danych"], correct: 0 },
+
+{ question: "Jakie jest główne zastosowanie wyliczników?", answers: ["Zarządzanie pamięcią", "Deklaracja stałych dla czytelności kodu", "Optymalizacja algorytmów", "Tworzenie wskaźników"], correct: 1 },
+
+{ question: "Jak definiuje się napis w języku C?", answers: ["Ciąg znaków ujęty w znaki cudzysłowu", "Ciąg znaków ujęty w apostrofy", "Tablica liczb całkowitych", "Wyłącznie pojedynczy znak"], correct: 0 },
+
+{ question: "Jakie sekwencje można stosować w stałych napisowych?", answers: ["Tylko liczby całkowite", "Sekwencje specjalne takie jak w stałych znakowych", "Tylko znaki interpunkcyjne", "Sekwencje binarne"], correct: 1 },
+
+{ question: "Co się dzieje z sąsiadującymi napisami podczas kompilacji?", answers: ["Są ignorowane", "Są sklejane", "Są porównywane", "Są dzielone"], correct: 1 },
+
+{ question: "Jakie elementy zawiera stała napisowa?", answers: ["Tylko litery", "Tablica znaków zakończona znakiem '\0'", "Tylko cyfry", "Tablica liczb zmiennoprzecinkowych"], correct: 1 },
+
+{ question: "Jaki znak oznacza koniec napisu w języku C?", answers: ["\n", "\t", "\0", "\a"], correct: 2 },
+
+{ question: "Czym są separatory w języku C?", answers: ["Ciąg dowolnych znaków", "Wszystkie znaki w kodzie", "Elementy oddzielające instrukcje", "Elementy bez znaczenia dla kompilacji"], correct: 2 },
+
+{ question: "Jakie znaki oznaczają komentarz w języku C?", answers: ["/* … / oraz //", "/ oraz //", "// oraz ##", "// oraz /* … */"], correct: 0 },
+
+{ question: "Które z poniższych nie może być zagnieżdżone w komentarzach?", answers: ["Komentarze oznaczone znakami /* … */", "Komentarze oznaczone znakami //", "Separatorzy", "Przerwy"], correct: 0 },
+
+{ question: "Jakie znaki są uważane za białe plamy?", answers: ["Tylko spacje", "Separatory, takie jak spacje, tabulacje i nowe wiersze", "Tylko komentarze", "Tylko tabulacje"], correct: 1 },
+
+{ question: "Co oznacza termin 'białe plamy' w kontekście programowania w C?", answers: ["Znaki interpunkcyjne", "Zbędne znaki w kodzie", "Separatory, które nie mają znaczenia dla wykonania programu", "Błędy w kodzie"], correct: 2 },
+
+{ question: "Jakie są dwa główne etapy przygotowania programu w języku C?", answers: ["Kompilacja i linkowanie", "Pisanie i uruchamianie", "Debugowanie i testowanie", "Edycja i kompilacja"], correct: 0 },
+
+{ question: "Jakie polecenie używa kompilator Turbo C++?", answers: ["gcc tekst.c", "tcc tekst.c", "cl tekst.c", "cc tekst.c"], correct: 1 },
+
+{ question: "Który kompilator jest używany w środowisku Unix?", answers: ["tcc", "bcc", "cl", "cc"], correct: 3 },
+
+{ question: "Jakie rozszerzenie ma plik wynikowy programu po kompilacji?", answers: [".bin", ".exe", ".out", ".obj"], correct: 1 },
+
+{ question: "Co jest obecnie częściej używane do kompilacji programów niż wiersz poleceń?", answers: ["Edytory tekstu", "Zintegrowane środowiska programistyczne", "Skripty powłoki", "Konsola"], correct: 1 },
+
+{ question: "Ile podstawowych typów danych występuje w języku C?", answers: ["Dwa", "Cztery", "Sześć", "Pięć"], correct: 1 },
+
+{ question: "Co przechowuje typ 'char' w języku C?", answers: ["Liczbę całkowitą", "Pojedynczy bajt przechowujący jeden znak", "Liczbę zmiennoprzecinkową", "Tablicę znaków"], correct: 1 },
+
+{ question: "Jaki typ danych jest używany do przechowywania liczb zmiennopozycyjnych pojedynczej dokładności?", answers: ["int", "char", "float", "double"], correct: 2 },
+
+{ question: "Jakie jest główne różnice między typem 'float' a 'double'?", answers: ["double ma większy rozmiar i dokładność", "float jest używany do tekstu", "double przechowuje tylko liczby całkowite", "float ma mniejszy zakres"], correct: 0 },
+
+{ question: "Jaki typ danych używany jest do przechowywania liczb całkowitych?", answers: ["char", "float", "int", "double"], correct: 2 },
+
+{ question: "Czym jest zmienna w języku C?", answers: ["Typ danych", "Stała", "Dana, która może przyjmować różne wartości", "Funkcja"], correct: 2 },
+
+{ question: "Do czego służą zmienne w programie?", answers: ["Do przechowywania wartości i informacji", "Do definiowania typów danych", "Do kompilacji kodu", "Do tworzenia komentarzy"], correct: 0 },
+
+{ question: "Jakie rodzaje danych mogą być przechowywane w zmiennych?", answers: ["Tylko liczby", "Tylko tekst", "Liczby, nazwy, tekst itp.", "Tylko wartości logiczne"], correct: 2 },
+
+{ question: "Kiedy należy zadeklarować zmienne w programie?", answers: ["Przed pierwszym użyciem", "Po pierwszym użyciu", "W dowolnym miejscu", "Nigdy nie trzeba ich deklarować"], correct: 0 },
+
+{ question: "Czy zmienne mogą mieć różne typy?", answers: ["Tak, w zależności od przypisanego typu", "Nie, muszą być zawsze tego samego typu", "Tak, ale tylko dla tekstu", "Nie, muszą być całkowite"], correct: 0 },
+
+{ question: "Jak wygląda podstawowa składnia deklaracji zmiennej w języku C?", answers: ["typ nazwa;", "nazwa typ;", "typ = nazwa;", "nazwa = typ;"], correct: 0 },
+
+{ question: "Jakie typy danych można zadeklarować w przykładowych zmiennych?", answers: ["Tylko całkowite", "Tylko zmiennoprzecinkowe", "Całkowite, znakowe, zmiennoprzecinkowe", "Tylko tekstowe"], correct: 2 },
+
+{ question: "Co oznacza zapis 'double pi = 3.14;'?", answers: ["Definicję zmiennej", "Inicjalizację zmiennej", "Deklarację zmiennej", "Deklarację i inicjalizację zmiennej"], correct: 3 },
+
+{ question: "Jaką wartość przechowuje zmienna 'char litera;'?", answers: ["Liczbę całkowitą", "Wartość znakową, np. 'b'", "Liczbę zmiennoprzecinkową", "Napis"], correct: 1 },
+
+{ question: "Jak deklaruje się tablicę znaków w języku C?", answers: ["char tytul = 'Pan Tadeusz';", "char tytul [20];", "tytul char[20];", "char tytul = 'Pan Tadeusz';"], correct: 1 },
+
+{ question: "Czym jest wyrażenie w języku C?", answers: ["Zapisem algorytmu określającego sposób wyznaczania wartości", "Deklaracją zmiennej", "Typem danych", "Komendą systemową"], correct: 0 },
+
+{ question: "Co może zawierać wyrażenie?", answers: ["Tylko stałe", "Kombinację nazw funkcji, zmiennych, stałych, operatorów i podwyrażeń", "Tylko zmienne", "Wyłącznie liczby całkowite"], correct: 1 },
+
+{ question: "Co reprezentuje wyrażenie 'a = b + c'?", answers: ["Przypisanie wartości do zmiennej", "Deklarację zmiennej", "Funkcję", "Wyrażenie logiczne"], correct: 0 },
+
+{ question: `Jaką funkcję pełni 'printf("Hello")'?`, answers: ["Deklaruje zmienną", "Wyświetla tekst na ekranie", "Przypisuje wartość", "Inicjalizuje zmienną"], correct: 1 },
+
+{ question: "Jak zapisywana jest konwencja języka C w wyrażeniach?", answers: ["W prostym języku naturalnym", "W notacji matematycznej", "Z użyciem składni specyficznej dla C", "Z użyciem pseudokodu"], correct: 2 },
+
+{ question: "Czym są instrukcje w języku C?", answers: ["Konstrukcje opisujące czynności wykonywane na danych", "Typy danych", "Nazwy zmiennych", "Funkcje"], correct: 0 },
+
+{ question: "Jakie rodzaje instrukcji istnieją w języku C?", answers: ["Tylko proste", "Tylko strukturalne", "Proste i strukturalne", "Proste i złożone"], correct: 2 },
+
+{ question: "Czym charakteryzuje się instrukcja prosta?", answers: ["Zawiera inne instrukcje", "Jest wyrażeniem zakończonym średnikiem", "Jest zawsze złożona", "Nie wykonuje żadnej akcji"], correct: 1 },
+
+{ question: "Jakie instrukcje są zbudowane na podstawie schematu strukturalizacji?", answers: ["Instrukcje proste", "Instrukcje strukturalne", "Instrukcje logiczne", "Instrukcje warunkowe"], correct: 1 },
+
+{ question: "Co oznacza, że instrukcja prosta nie zawiera jako składowych innych instrukcji?", answers: ["Jest pojedynczym działaniem", "Nie wykonuje żadnej akcji", "Jest złożona", "Jest opóźniona"], correct: 0 },
+
+{ question: "Jakie jest przykład wyrażenia w języku C?", answers: ["a = b + 0.5*c;", `printf("Hello");`, "mojafunkcja();", "int x;"], correct: 0 },
+
+{ question: "Co oznacza zapis 'a = b + 0.5*c;'?", answers: ["Przypisanie wartości do zmiennej", "Wywołanie funkcji", "Deklaracja zmiennej", "Komentarz"], correct: 0 },
+
+{ question: "Jakie jest przykład instrukcji prostej?", answers: ["a = b + 0.5*c", `printf("Hello");`, "mojafunkcja();", "while (x < 10)"], correct: 1 },
+
+{ question: `Co wykonuje polecenie 'printf("Hello");'?`, answers: ["Deklaruje zmienną", "Wyświetla tekst na ekranie", "Przypisuje wartość", "Inicjalizuje zmienną"], correct: 1 },
+
+{ question: "Jakie są różnice między wyrażeniem a instrukcją?", answers: ["Nie ma różnic", "Wyrażenie zwraca wartość, instrukcja wykonuje akcję", "Instrukcja zwraca wartość, wyrażenie wykonuje akcję", "Wyrażenie jest zawsze krótsze"], correct: 1 },
+
+{ question: "Co oznacza instrukcja przypisania 'z = w;'?", answers: ["Wywołanie funkcji", "Przypisanie wartości zmiennej", "Deklaracja zmiennej", "Inicjalizacja funkcji"], correct: 1 },
+
+{ question: "Jak wygląda składnia instrukcji wywołania funkcji?", answers: ["nazwa_funkcji; lista parametrów", "nazwa_funkcji (lista parametrów);", "lista parametrów (nazwa_funkcji);", "nazwa_funkcji: lista parametrów"], correct: 1 },
+
+{ question: "Co jest wynikiem instrukcji 'z = w;'?", answers: ["Zmienna z zostaje zainicjalizowana", "Zmienna z przyjmuje wartość zmiennej w", "Funkcja jest wywoływana", "Zmienna w jest usuwana"], correct: 1 },
+
+{ question: "Jakie elementy mogą znaleźć się w 'lista parametrów'?", answers: ["Tylko zmienne", "Tylko stałe", "Zmiennych, stałych i innych wyrażeń", "Tylko funkcje"], correct: 2 },
+
+{ question: "Czy instrukcja wywołania funkcji może być użyta bez listy parametrów?", answers: ["Tak, może być pusta", "Nie, zawsze musi mieć parametry", "Tak, ale tylko w przypadkach specjalnych", "Nie, to błąd"], correct: 0 },
+
+{ question: "Czym jest instrukcja złożona w języku C?", answers: ["Konstrukcją opisującą jedną czynność", "Zbiorem pojedynczych instrukcji", "Funkcją", "Typem danych"], correct: 1 },
+
+{ question: "Jak nazywa się instrukcja złożona także?", answers: ["Funkcja", "Typ danych", "Blok instrukcji", "Instrukcja warunkowa"], correct: 2 },
+
+{ question: "Jak wygląda składnia instrukcji złożonej?", answers: ["{ instrukcja 1; instrukcja 2; },", "{ instrukcja 1 instrukcja 2; },", "instrukcja 1; instrukcja 2;", "{ instrukcja 1, instrukcja 2, instrukcja n },"], correct: 0 },
+
+{ question: "Co może znajdować się w bloku instrukcji?", answers: ["Tylko instrukcje proste", "Tylko zmienne", "Dowolna liczba instrukcji", "Tylko funkcje"], correct: 2 },
+
+{ question: "Jaki jest cel użycia instrukcji złożonej?", answers: ["Zgrupowanie kilku instrukcji w jeden blok", "Deklaracja zmiennych", "Inicjalizacja funkcji", "Wywołanie funkcji"], correct: 0 },
+
+{ question: "Jak nazywa się instrukcja, która pozwala na wykonanie kodu w zależności od spełnienia warunku?", answers: ["Instrukcja powtarzająca", "Instrukcja warunkowa", "Instrukcja złożona", "Instrukcja przypisania"], correct: 1 },
+
+{ question: "Jak wygląda podstawowa składnia instrukcji warunkowej 'if'?", answers: ["if (warunek) instrukcja;", "if (instrukcja) warunek;", "if (warunek) instrukcja else instrukcja;", "if instrukcja;"], correct: 0 },
+
+{ question: "Co się dzieje, gdy warunek w instrukcji 'if' jest prawdziwy?", answers: ["Wykonywana jest instrukcja związana z 'else'", "Nie wykonuje się żadna instrukcja", "Wykonywana jest instrukcja po 'if'", "Program kończy działanie"], correct: 2 },
+
+{ question: "Jak wygląda rozszerzona składnia instrukcji warunkowej 'if' z użyciem 'else'?", answers: ["if (warunek) instrukcja1; else instrukcja2;", "if (warunek) instrukcja; else instrukcja;", "if (warunek) else instrukcja;", "if instrukcja1; else instrukcja2;"], correct: 1 },
+
+{ question: "Jakie typy wyrażeń mogą być użyte w warunkach instrukcji 'if'?", answers: ["Tylko liczby", "Tylko zmienne", "Dowolne wyrażenia logiczne", "Tylko stałe"], correct: 2 },
+
+{ question: "Jakie jest przykład użycia instrukcji 'if' w języku C?", answers: [`if (s == 2) printf("Dwa pierwiastki");`, `if a = 1;`, `if (x > y) a = 1; else a = 0;`, "if (true) { a = 1; },"], correct: 0 },
+
+{ question: "Co się dzieje, gdy warunek 'if (x > y)' jest prawdziwy?", answers: ["Wykonuje się 'a = 0;'", "Wykonuje się 'a = 1;'", "Nie wykonuje się żadna instrukcja", "Program kończy działanie"], correct: 1 },
+
+{ question: "Jak wygląda składnia instrukcji 'if' z blokiem instrukcji?", answers: ["if (wyrażenie) { instrukcja; },", "if (wyrażenie) instrukcja;", "if instrukcja1 else instrukcja2;", "if (wyrażenie) instrukcja1; else { instrukcja2; },"], correct: 0 },
+
+{ question: `Co oznacza wyrażenie 'printf("Wartość wyrażenia: %f\n", a);' w bloku 'if'?`, answers: ["Wyświetla tekst na ekranie", "Inicjalizuje zmienną", "Wywołuje funkcję", "Tworzy komentarz"], correct: 0 },
+
+{ question: "Jakie instrukcje mogą znajdować się wewnątrz bloku instrukcji 'if'?", answers: ["Tylko instrukcje proste", "Tylko instrukcje warunkowe", "Dowolne instrukcje", "Tylko wywołania funkcji"], correct: 2 },
+
+{ question: "Czym jest instrukcja 'for' w języku C?", answers: ["Instrukcją warunkową", "Instrukcją powtarzającą", "Instrukcją złożoną", "Instrukcją przypisania"], correct: 1 },
+
+{ question: "Jakie są trzy części składni instrukcji 'for'?", answers: ["warunek1; warunek2; warunek3;", "wyrażenie1; wyrażenie2; wyrażenie3;", "inicjalizacja; warunek; inkrementacja;", "start; stop; krok;"], correct: 1 },
+
+{ question: "Co oznacza 'wyrażenie1' w pętli 'for'?", answers: ["Warunek końca pętli", "Inicjalizacja zmiennej", "Wykonanie instrukcji", "Zmiana wartości zmiennej"], correct: 1 },
+
+{ question: "Kiedy pętla 'for' przestaje się wykonywać?", answers: ["Gdy 'wyrażenie1' jest fałszywe", "Gdy 'wyrażenie2' jest fałszywe", "Gdy 'wyrażenie3' jest prawdziwe", "Gdy instrukcja zakończy działanie"], correct: 1 },
+
+{ question: "Jak wygląda przykładowa składnia pętli 'for'?", answers: ["for (i = 0; i < 10; i++) instrukcja;", "for (i < 10; i++) instrukcja;", "for (i = 0; i++) instrukcja;", "for (i = 0; i < 10; i = i + 1) instrukcja;"], correct: 0 },
+
+{ question: "Czym jest funkcja 'printf' w języku C?", answers: ["Funkcją do formatowania łańcuchów", "Funkcją do wyświetlania danych", "Funkcją do obliczeń matematycznych", "Funkcją do zarządzania pamięcią"], correct: 1 },
+
+{ question: "Gdzie znajduje się deklaracja funkcji 'printf'?", answers: ["W pliku stdlib.h", "W pliku stdio.h", "W pliku string.h", "W pliku math.h"], correct: 1 },
+
+{ question: "Jakie jest znaczenie łańcucha formatującego w funkcji 'printf'?", answers: ["Określa, jakie dane mają być wyświetlane", "Jest to typ zmiennej", "Określa miejsce w pamięci", "Jest to stała"], correct: 0 },
+
+{ question: "Jak zaczynają się sekwencje formatujące w 'printf'?", answers: ["Znakiem $", "Znakiem &", "Znakiem %", "Znakiem #"], correct: 2 },
+
+{ question: "Jak wygląda przykładowe użycie funkcji 'printf'?", answers: [`printf("Wartość: %d", x);`, "printf(x);", `printf("Wartość: x");`, `printf(%d, x);`], correct: 0 },
+
+{ question: "Jaką wartość wyświetla sekwencja formatująca '%d' w funkcji 'printf'?", answers: ["Liczba zmiennopozycyjna", "Liczba całkowita dziesiętna", "Znak", "Łańcuch znaków"], correct: 1 },
+
+{ question: "Jaką sekwencję formatującą należy użyć do wyświetlenia znaku?", answers: ["%s", "%c", "%d", "%f"], correct: 1 },
+
+{ question: "Która sekwencja formatująca jest używana do wyświetlania liczb szesnastkowych?", answers: ["%o", "%x", "%u", "%d"], correct: 1 },
+
+{ question: "Co oznacza sekwencja formatująca '%f'?", answers: ["Liczba całkowita", "Znak", "Liczba zmiennopozycyjna", "Łańcuch znaków"], correct: 2 },
+
+{ question: "Jaką sekwencję formatującą stosuje się do wyświetlenia liczby w postaci wykładniczej?", answers: ["%f", "%e", "%d", "%x"], correct: 1 },
+
+{ question: "Jaką wartość wyświetla sekwencja formatująca '%g'?", answers: ["Liczba całkowita", "Liczba zmiennopozycyjna w formacie %f lub %e", "Znak", "Łańcuch znaków"], correct: 1 },
+
+{ question: "Co oznacza sekwencja '%6d' w kontekście formatowania?", answers: ["Liczba całkowita zajmująca co najmniej 6 znaków", "Liczba zmiennopozycyjna zajmująca 6 znaków", "Liczba ósemkowa", "Znak zajmujący 6 znaków"], correct: 0 },
+
+{ question: "Jak zdefiniować liczbę zmiennopozycyjną z dwoma miejscami po kropce dziesiętnej?", answers: ["%2f", "%.2f", "%f.2", "%d.2f"], correct: 1 },
+
+{ question: "Co oznacza sekwencja formatująca '%6.2f'?", answers: ["Liczba zmiennopozycyjna z 2 miejscami po kropce zajmująca co najmniej 6 znaków", "Liczba całkowita zajmująca 6 znaków", "Liczba zmiennopozycyjna zajmująca 6 miejsc", "Znak zajmujący co najmniej 6 znaków"], correct: 0 },
+
+{ question: "Jaką sekwencję formatującą użyjesz, aby wyświetlić znak '%'?", answers: ["%%", "%", "%25", "%g"], correct: 0 },
+
+{ question: "Jaką funkcję użyjemy do pobrania pojedynczego znaku z klawiatury?", answers: ["gets", "scanf", "getchar", "printf"], correct: 2 },
+
+{ question: "Jaką funkcję używamy do wczytania łańcucha znaków do tablicy?", answers: ["getchar", "scanf", "puts", "gets"], correct: 3 },
+
+{ question: "Jaka jest składnia funkcji 'scanf'?", answers: [`scanf("sekwencja formatująca", zmienna);`, `scanf("sekwencja formatująca", &zmienna);`, "scanf(zmienna);", `scanf("%d", zmienna);`], correct: 1 },
+
+{ question: "Co robi funkcja 'scanf'?", answers: ["Pobiera dane z pliku", "Pobiera dane tekstowe z klawiatury i zapisuje je w zmiennych", "Wyświetla dane na ekranie", "Zamienia zmienne na łańcuchy"], correct: 1 },
+
+{ question: "Jakie znaki są używane w funkcji 'gets'?", answers: ["Znak kropki", "Znak nowej linii", "Znak tabulacji", "Znak cudzysłowu"], correct: 1 },
+
+{ question: "Jakie są różnice między sekwencjami formatowania w funkcji 'scanf' a tymi w 'printf'?", answers: ["W 'scanf' używa się '&' dla zmiennych", "W 'printf' używa się '&' dla zmiennych", "Są identyczne", "W 'scanf' nie można używać wskaźników"], correct: 0 },
+
+{ question: "Jak zaczyna się sekwencja formatująca w 'scanf'?", answers: ["Znakiem $", "Znakiem &", "Znakiem %", "Znakiem #"], correct: 2 },
+
+{ question: "Co oznacza 'pole znaków wejściowych' w kontekście 'scanf'?", answers: ["Miejsce w pamięci", "Sekwencja formatująca", "Ciąg znaków do odczytania", "Argument funkcji"], correct: 2 },
+
+{ question: "Co się dzieje, gdy zdefiniowano rozmiar pola w 'scanf'?", answers: ["Odczytana zostanie cała linia", "Wczytane zostaną znaki do określonego rozmiaru", "Rozmiar nie ma znaczenia", "Wczytana zostanie tylko jedna cyfra"], correct: 1 },
+
+{ question: "Jakie znaki są uważane za 'białe plamy' w kontekście 'scanf'?", answers: ["Znaki nowej linii", "Spacje, tabulacje i nowe linie", "Znak ','", "Znak '.'"], correct: 1 },
+
+{ question: "Jakie kody formatujące użyjesz do wczytania liczby całkowitej dziesiętnej w 'scanf'?", answers: ["d", "f", "c", "s"], correct: 0 },
+
+{ question: "Co oznacza kod formatujący 'i' w funkcji 'scanf'?", answers: ["Wczytuje tylko liczby dziesiętne", "Wczytuje liczby całkowite w różnych systemach", "Wczytuje liczby zmiennopozycyjne", "Wczytuje znaki"], correct: 1 },
+
+{ question: "Jakie kody formatujące wczytują liczby zmiennopozycyjne?", answers: ["d, i", "e, f, g", "o, u", "x, c"], correct: 1 },
+
+{ question: "Jakie kody formatujące są używane do wczytania znaku i łańcucha znaków?", answers: ["d, u", "c, s", "i, f", "o, x"], correct: 1 },
+
+{ question: "Jaki kod formatujący wczytuje liczbę szesnastkową w 'scanf'?", answers: ["d", "o", "x", "i"], correct: 2 },
+
+{ question: "Co oznacza modyfikator '%*s' w funkcji 'scanf'?", answers: ["Wczytuje dane do zmiennej", "Odrzuca dane wejściowe, nie zapisując ich", "Zapisuje dane z maksymalną długością", "Zapisuje dane jako zmienną float"], correct: 1 },
+
+{ question: "Jaką rolę pełni liczba całkowita po znaku '%' w modyfikatorze '%10s'?", answers: ["Określa maksymalną długość wczytywanych znaków", "Określa typ zmiennej", "Zwiększa dokładność", "Odrzuca dodatkowe znaki"], correct: 0 },
+
+{ question: "Jakie znaczniki długości modyfikują typ zmiennej w 'scanf'?", answers: ["x, y, z", "h, l, L", "d, f, i", "c, s, e"], correct: 1 },
+
+{ question: "Co oznacza modyfikator '%ld' w funkcji 'scanf'?", answers: ["Zmienna typu float", "Zmienna typu long int", "Zmienna typu short int", "Zmienna typu double"], correct: 1 },
+
+{ question: "Jaką zmienną reprezentuje modyfikator '%Lf'?", answers: ["long int", "short int", "long double", "double"], correct: 2 },
+
+{ question: "Jaką funkcję użyjemy do przekształcenia tekstu na liczbę całkowitą?", answers: ["atof", "atoi", "atol", "strtol"], correct: 1 },
+
+{ question: "Co robi funkcja 'atof'?", answers: ["Przekształca tekst na liczbę całkowitą", "Przekształca tekst na liczbę zmiennopozycyjną", "Generuje błąd przy konwersji", "Przekształca tekst na łańcuch znaków"], correct: 1 },
+
+{ question: "Jaką wartość generuje każda z funkcji konwersji, gdy wystąpi błąd?", answers: ["Null", "Pusty łańcuch", "Zero", "Nieokreśloną wartość"], correct: 2 },
+
+{ question: "Co zwraca funkcja 'atol'?", answers: ["Liczbę zmiennopozycyjną", "Liczbę całkowitą typu long int", "Liczbę całkowitą typu int", "Tekst"], correct: 1 },
+
+{ question: "W jakiej bibliotece znajdują się funkcje 'atoi', 'atof' i 'atol'?", answers: ["stdio.h", "stdlib.h", "string.h", "math.h"], correct: 1 },
+
+{ question: "Co określa kolejność wykonywania działań w wyrażeniach arytmetycznych?", answers: ["Tylko nawiasy", "Priorytet operatorów i nawiasy", "Tylko operatorzy", "Kolejność zmiennych"], correct: 1 },
+
+{ question: "Jakie kategorie operatorów arytmetycznych są wymienione w slajdzie?", answers: ["Jednoargumentowe, dwuargumentowe, potęgowe", "Multiplikatywne, addytywne, jednoargumentowe", "Logiczne, relacyjne, addytywne", "Tylko jednoargumentowe"], correct: 1 },
+
+{ question: "Jakie operatory arytmetyczne są dwuargumentowe i jak się łączą?", answers: ["Są lewostronnie łączne", "Są prawostronnie łączne", "Nie mają łączności", "Są zagnieżdżone"], correct: 0 },
+
+{ question: "Które z wymienionych operatorów mają najwyższy priorytet?", answers: ["Addytywne", "Multiplikatywne", "Jednoargumentowe", "Relacyjne"], correct: 2 },
+
+{ question: "Jakie znaczenie ma użycie nawiasów w wyrażeniach arytmetycznych?", answers: ["Nie ma znaczenia", "Zmienia kolejność działań", "Przyspiesza obliczenia", "Zwiększa priorytet operatorów"], correct: 1 },
+
+{ question: "Jakim operatorem w języku C jest '+'?", answers: ["Odejmowanie", "Mnożenie", "Dodawanie", "Dzielenie"], correct: 2 },
+
+{ question: "Co oznacza operator '%' w języku C?", answers: ["Dodawanie", "Reszta z dzielenia", "Mnożenie", "Odejmowanie"], correct: 1 },
+
+{ question: "Jakie jest znaczenie operatora '/' w języku C?", answers: ["Dodawanie", "Odejmowanie", "Mnożenie", "Dzielenie"], correct: 3 },
+
+{ question: "Jakiego operatora użyjesz do mnożenia w języku C?", answers: ["+", "-", "*", "/"], correct: 2 },
+
+{ question: "Który operator w języku C odpowiada operatorowi 'div' w Pascalu?", answers: ["%", "/", "*", "+"], correct: 1 },
+
+{ question: "Jak działa pętla 'do…while'?", answers: ["Sprawdza warunek przed wykonaniem instrukcji", "Wykonuje instrukcję przynajmniej raz", "Nie wykonuje instrukcji, jeśli warunek jest fałszywy", "Zawsze wykonuje instrukcję bez sprawdzania warunku"], correct: 1 },
+
+{ question: "Gdzie znajduje się warunek w pętli 'do…while'?", answers: ["Przed instrukcją", "W instrukcji", "Po instrukcji", "Nie ma warunku"], correct: 2 },
+
+{ question: "Jakie będzie wyjście z podanego przykładu, gdy x początkowo wynosi 0?", answers: ["Liczba 0", "Liczba 100", "Liczby od 1 do 100", "Nie wyświetli żadnej liczby"], correct: 2 },
+
+{ question: "Jaka jest różnica między pętlą 'while' a 'do…while'?", answers: ["Nie ma różnicy", "Pętla 'do…while' sprawdza warunek przed wykonaniem", "Pętla 'while' nie wykonuje instrukcji, jeśli warunek jest fałszywy", "Pętla 'do…while' nie wymaga warunku"], correct: 2 },
+
+{ question: "Co się stanie, jeśli wyrażenie w pętli 'do…while' zawsze zwraca fałsz?", answers: ["Pętla się nie wykona", "Pętla wykona się przynajmniej raz", "Pętla wykona się w nieskończoność", "Nie można tego osiągnąć"], correct: 1 },
+
+{ question: "Jak określa się typ wyrażenia arytmetycznego w przypadku instrukcji przypisania?", answers: ["Na podstawie typu wyrażenia", "Na podstawie typu zmiennej, której przypisuje się wartość", "Na podstawie operatorów", "Na podstawie długości wyrażenia"], correct: 1 },
+
+{ question: "Jakiego typu będzie wyrażenie 'b * c / d', jeśli b i c są typu double, a d jest typu double?", answers: ["int", "float", "double", "char"], correct: 2 },
+
+{ question: "Co się stanie, gdy przypiszesz wyrażenie typu double do zmiennej typu int?", answers: ["Nie ma to znaczenia", "Zostanie zaokrąglone", "Zostanie rzucony błąd", "Zostanie pominięte"], correct: 1 },
+
+{ question: "Jakiego typu będzie wynik wyrażenia 'a = b * c' w kontekście zmiennej a typu int?", answers: ["int", "float", "double", "char"], correct: 0 },
+
+{ question: "Jak można określić typ wyrażenia, jeśli nie ma przypisania?", answers: ["Na podstawie kontekstu", "Na podstawie jego składników", "Nie można określić", "Na podstawie jego długości"], correct: 1 },
+
+{ question: "Czym jest rzutowanie w kontekście programowania w C?", answers: ["Przypisaniem wartości", "Wymuszoną konwersją typów", "Zmienną globalną", "Operatorem arytmetycznym"], correct: 1 },
+
+{ question: "Jak wygląda składnia operatora rzutowania?", answers: ["(typ) wyrażenie", "(nazwa_typu) wyrażenie_rzutowane", "wyrażenie (nazwa_typu)", "wyrażenie: nazwa_typu"], correct: 1 },
+
+{ question: "Co się stanie, gdy użyjesz dzielenia całkowitego '5 / 7'?", answers: ["Zwróci 0", "Zwróci 0.71428", "Zwróci 5", "Zwróci 7"], correct: 0 },
+
+{ question: "Jakie będzie wynik rzutowania '(float)5 / 7'?", answers: ["0", "0.71428", "5", "7"], correct: 1 },
+
+{ question: "Co się stanie, gdy wykonasz '5 / 7.0'?", answers: ["Zwróci 0", "Zwróci 0.71428", "Zwróci 5", "Zwróci 7"], correct: 1 },
+
+{ question: "Jakie działanie wykonuje operator '++'?", answers: ["Zwiększa zmienną o 2", "Zwiększa zmienną o 1", "Zmniejsza zmienną o 1", "Przypisuje wartość 0"], correct: 1 },
+
+{ question: "Co oznacza 'n++' w kontekście przypisania?", answers: ["Zwiększa n przed użyciem", "Zwiększa n po użyciu", "Zmniejsza n przed użyciem", "Zwraca błąd"], correct: 1 },
+
+{ question: "Jakie będą wartości zmiennych po wykonaniu 'n=5; x = n++;'?", answers: ["x=5, n=5", "x=6, n=6", "x=5, n=6", "x=6, n=5"], correct: 2 },
+
+{ question: "Co się stanie po wykonaniu 'x = ++n;' jeśli n=5?", answers: ["x=5, n=5", "x=6, n=5", "x=6, n=6", "x=5, n=6"], correct: 2 },
+
+{ question: "Który z operatorów jest operatorem przedrostkowym?", answers: ["n++", "++n", "n--", "--n"], correct: 1 },
+
+{ question: "Jakie wartości logiczne są przypisane w języku C?", answers: ["0 to prawda, 1 to fałsz", "0 to fałsz, wartość niezerowa to prawda", "Każda wartość to fałsz", "Tylko 1 to prawda"], correct: 1 },
+
+{ question: "Jaką wartość przyjmuje zmienna 'int poprawna_data = 0;'?", answers: ["Prawda", "Fałsz", "Niezdefiniowana", "Zerowa"], correct: 1 },
+
+{ question: "Co zostanie wydrukowane, gdy 'if (poprawna_data == 0)' jest prawdziwe?", answers: ["Wprowadzono poprawną datę.", "Wprowadzono niepoprawną datę.", "Brak danych.", "Wartość logiczna jest prawdziwa."], correct: 1 },
+
+{ question: "Jak można wykorzystać zmienną typu int jako zmienną logiczną?", answers: ["Przez przypisanie wartości -1", "Przez przypisanie wartości 0 lub niezerowej", "Zawsze jako zmienną 0", "Nie można wykorzystać zmiennej typu int jako logicznej"], correct: 1 },
+
+{ question: "Co oznacza wartość niezerowa w kontekście wyrażeń logicznych w C?", answers: ["Fałsz", "Prawda", "Nieokreślona wartość", "Błąd"], correct: 1 },
+
+{ question: "Jakim operatorem jest '>'?", answers: [">= większe lub równe", "< mniejsze niż", "> większe niż", "<= mniejsze lub równe"], correct: 2 },
+
+{ question: "Co oznacza operator '!='?", answers: ["Równe", "Nie równe", "Większe lub równe", "Mniejsze niż"], correct: 1 },
+
+{ question: "Który operator sprawdza, czy dwie wartości są równe?", answers: [">", "<", "==", "!="], correct: 2 },
+
+{ question: "Jakie działanie wykonuje operator '<='?", answers: ["Większe niż", "Mniejsze lub równe", "Równe", "Nie równe"], correct: 1 },
+
+{ question: "Który z poniższych operatorów oznacza 'większe lub równe'?", answers: ["<", ">", "<=", ">="], correct: 3 },
+
+{ question: "Jaką funkcję pełni operator '!'?", answers: ["Negacja", "Koniunkcja", "Alternatywa", "Porównanie"], correct: 0 },
+
+{ question: "Co oznacza operator '&&'?", answers: ["Negacja", "Koniunkcja", "Alternatywa", "Porównanie"], correct: 1 },
+
+{ question: "Jakie wartości zwracają operatory porównania i logiczne?", answers: ["-1 lub 1", "0 lub 1", "Prawda lub Fałsz", "Dowolne liczby"], correct: 1 },
+
+{ question: "Co oznacza operator '||'?", answers: ["Negacja", "Koniunkcja", "Alternatywa", "Równość"], correct: 2 },
+
+{ question: "Który operator używany jest do sprawdzania warunku logicznego 'prawda i fałsz'?", answers: ["||", "!", "&&", "=="], correct: 2 },
+
+{ question: "Jakie jest równoważne wyrażenie dla 'i += 2'?", answers: ["i = i + 2", "i = 2 + i", "i + 2 = i", "2 += i"], correct: 0 },
+
+{ question: "Co oznacza operator 'x *= y + 1'?", answers: ["x = x + (y + 1)", "x = (x * y) + 1", "x = x * (y + 1)", "x += (y + 1)"], correct: 2 },
+
+{ question: "Jakie jest równoważne wyrażenie dla 'xval % s[a + b] += 4'?", answers: ["xval % s[a + b] = xval % s[a + b] + 4", "xval % s[a + b] = 4 + xval % s[a + b]", "xval % s[a + b] += 4", "4 += xval % s[a + b]"], correct: 0 },
+
+{ question: "Który operator używany jest do skróconego przypisania mnożenia?", answers: ["+=", "-=", "*=", "/="], correct: 2 },
+
+{ question: "Jakie jest działanie wyrażenia 'wyrazenie1 op= wyrazenie2'?", answers: ["Przypisuje wynik wyrażenia 1 do wyrażenia 2", "Dodaje wyrażenie 2 do wyrażenia 1", "Przypisuje wynik 'wyrazenie1' do 'wyrazenie2'", "Równoważne jest wyrażeniu 'wyrazenie1 = (wyrazenie1) op (wyrazenie2)'"], correct: 3 },
+
+{ question: "Jaką łączność mają operatory arytmetyczne * i /?", answers: ["Prawostronną", "Lewostronną", "Niezdefiniowaną", "Obie"], correct: 1 },
+
+{ question: "Które operatory mają łączność prawostronną?", answers: ["+ i -", "++ i --", "= i += ", "&& i ||"], correct: 2 },
+
+{ question: "Jakie jest działanie operatora '?:'?", answers: ["Zwraca wartość prawdziwą lub fałszywą", "Zwraca ostatnią wartość", "Jest operatorem przypisania", "Jest operatorem warunkowym"], correct: 3 },
+
+{ question: "Jakie operatory mają najwyższy priorytet?", answers: ["* i /", "( ) i [ ]", "+ i -", "&& i ||"], correct: 1 },
+
+{ question: "Które z poniższych operatorów mają łączność lewostronną?", answers: ["== i !=", "?: i =", "+= i -=", "&& i ||"], correct: 0 },
+
+{ question: "Czym są efekty uboczne w języku C?", answers: ["Zmiana stanu programu bez zmiany jego zwracanej wartości", "Zwracanie wartości z funkcji", "Przypisanie wartości do zmiennej", "Wykonanie instrukcji warunkowej"], correct: 0 },
+
+{ question: "Które z poniższych działań może powodować efekty uboczne?", answers: ["Wywołania funkcji", "Deklaracja zmiennej", "Zdefiniowanie stałej", "Zainicjowanie tablicy"], correct: 0 },
+
+{ question: "Co może być przykładem efektu ubocznego?", answers: ["x = f() + g();", "a = 5;", "b = c * d;", "if (x > 0) { ... },"], correct: 0 },
+
+{ question: "Jakie efekty uboczne może powodować operator zwiększania '++'?", answers: ["Zmienia wartość zmiennej przed jej użyciem", "Zwiększa zmienną po użyciu jej wartości", "Nie ma efektów ubocznych", "Tylko w funkcjach"], correct: 0 },
+
+{ question: "Dlaczego kolejność obliczania argumentów operatora nie jest określona w C?", answers: ["Ze względu na efekty uboczne", "Bo język C tego nie wymaga", "Ze względów wydajnościowych", "Bo to nie jest istotne"], correct: 0 },
+
+{ question: "Jak działa instrukcja while w języku C?", answers: ["Wykonuje instrukcję, jeśli wyrażenie jest prawdziwe", "Wykonuje instrukcję zawsze", "Nie wykonuje żadnej instrukcji", "Wykonuje instrukcję niezależnie od wyrażenia"], correct: 0 },
+
+{ question: "Co się stanie, gdy wyrażenie w pętli while jest równe zero?", answers: ["Pętla nie zostanie wykonana", "Pętla wykona się raz", "Pętla wykona się w nieskończoność", "Pętla wykona wszystkie instrukcje"], correct: 0 },
+
+{ question: "Co oznacza pusta instrukcja w kontekście pętli while?", answers: ["Nie wykonuje żadnych operacji", "Wykonuje operację wyjścia", "Wykonuje nieskończoną pętlę", "Jest to błąd w kodzie"], correct: 0 },
+
+{ question: "Jakie jest zastosowanie pętli while?", answers: ["Do iteracji, gdy nie znamy liczby powtórzeń", "Do statycznych pętli", "Do wywołania funkcji", "Do przetwarzania tablic"], correct: 0 },
+
+{ question: "Jak w powyższym przykładzie omijane są białe znaki?", answers: ["Poprzez ignorowanie ich w pętli", "Poprzez dodanie instrukcji break", "Poprzez użycie zmiennej globalnej", "Poprzez zagnieżdżoną pętlę"], correct: 0 },
+
+{ question: "Jaki typ argumentu przyjmuje funkcja sin(x)?", answers: ["Stopnie", "Radiany", "Sekundy", "Grady"], correct: 1 },
+
+{ question: "Co oblicza funkcja cosh(x)?", answers: ["Cosinus zwykły", "Cosinus hiperboliczny", "Tangens zwykły", "Sinus hiperboliczny"], correct: 1 },
+
+{ question: "Jakie wartości przyjmuje kąt dla funkcji tan(x)?", answers: ["W radianach", "W stopniach", "Nie ma znaczenia", "W milisekundach"], correct: 0 },
+
+{ question: "Co zwraca funkcja log(x) dla x ≤ 0?", answers: ["Wartość rzeczywistą", "Błąd zakresu", "0", "Wartość bezwzględną"], correct: 1 },
+
+{ question: "Jaka jest różnica między log(x) a log10(x)?", answers: ["log(x) to logarytm o podstawie 10", "log(x) to logarytm naturalny", "log10(x) jest zawsze mniejszy", "Nie ma różnicy"], correct: 1 },
+
+{ question: "Co zwraca funkcja fabs(x)?", answers: ["x", "x^2", "|x|", "0"], correct: 2 },
+
+{ question: "Jaką wartość zwraca funkcja ceil(x)?", answers: ["Największa liczba całkowita nie większa niż x", "Najmniejsza liczba całkowita nie mniejsza niż x", "x", "x zaokrąglone do najbliższej liczby całkowitej"], correct: 1 },
+
+{ question: "Jakie są cztery podstawowe typy danych w języku C?", answers: ["char, int, float, double", "char, short, long, double", "int, float, double, string", "char, int, long, string"], correct: 0 },
+
+{ question: "Co oznacza kwalifikator unsigned?", answers: ["Zmienna może przechowywać tylko liczby dodatnie", "Zmienna przechowuje liczby całkowite z wiodącym zerem", "Zmienna może przechowywać liczby ujemne", "Nie ma wpływu na typ zmiennej"], correct: 0 },
+
+{ question: "Jak zdefiniować zmienną jako short int w języku C?", answers: ["short int x;", "int short x;", "x short int;", "short x;"], correct: 0 },
+
+{ question: "Jaka jest różnica między signed int a unsigned int?", answers: ["signed int może przechowywać wartości ujemne", "unsigned int ma większy zakres", "Obydwa są identyczne", "signed int jest zawsze większy"], correct: 0 },
+
+{ question: "Co oznacza kwalifikator volatile?", answers: ["Zmienna może być modyfikowana przez zewnętrzne źródła", "Zmienna nie może być modyfikowana", "Zmienna ma ograniczony zasięg", "Zmienna jest stała"], correct: 0 },
+
+{ 
+  question: "Jakie są cztery podstawowe typy danych w języku C?", 
+  answers: ["char, int, float, double", "char, short, long, double", "int, float, double, string", "char, int, long, string"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jakie kwalifikatory mogą być używane z typem int? Podaj przykłady.", 
+  answers: ["signed, unsigned, short, long", "static, extern", "volatile, const", "float, double"], 
+  correct: 0 
+},
+
+{ 
+  question: "Czy można używać kwalifikatora unsigned z typem char? Uzasadnij swoją odpowiedź.", 
+  answers: ["Tak, unsigned może być użyty z char", "Nie, unsigned jest tylko dla int", "Tak, ale nie ma to sensu", "Nie, char nie obsługuje unsigned"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jakie są możliwe kombinacje kwalifikatorów z typem double?", 
+  answers: ["const, volatile", "unsigned, signed", "short, long", "int, float"], 
+  correct: 0 
+},
+
+{ 
+  question: "Co oznacza kwalifikator const i w jaki sposób może być zastosowany? Podaj przykład.", 
+  answers: ["Oznacza, że zmienna nie może być zmieniana, np. const int x = 10;", "Oznacza, że zmienna może być zmieniana, np. int const x = 10;", "Oznacza, że zmienna jest stała, np. const float y = 3.14;", "Nie ma takiego kwalifikatora"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jakie są różnice pomiędzy short int a long int?", 
+  answers: ["Rozmiar w pamięci i zakres wartości", "Tylko zakres wartości", "Tylko rozmiar w pamięci", "Nie ma różnicy"], 
+  correct: 0 
+},
+
+{ 
+  question: "Co oznacza kwalifikator const w języku C?", 
+  answers: ["Wartość nie może się zmieniać", "Wartość może być zmieniana", "Wartość jest zawsze zerowa", "Wartość jest zawsze dodatnia"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jakie znaczenie ma kwalifikator volatile?", 
+  answers: ["Wartość może się zmieniać w czasie wykonywania programu", "Wartość jest stała", "Wartość jest nieprzewidywalna", "Wartość zawsze wynosi 0"], 
+  correct: 0 
+},
+
+{ 
+  question: "Gdzie mogą występować kwalifikatory const i volatile?", 
+  answers: ["Przed każdym z typów danych", "Tylko przed typem int", "Tylko przed typem float", "Tylko w strukturach"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jakie jest zastosowanie kwalifikatora const?", 
+  answers: ["Deklaracja stałej, która nie może być zmieniana", "Deklaracja zmiennej, która może być zmieniana", "Deklaracja wskaźnika", "Brak zastosowania w praktyce"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jak kwalifikator volatile wpływa na optymalizację kodu?", 
+  answers: ["Kompilator nie optymalizuje dostępu do tej zmiennej", "Kompilator optymalizuje dostęp", "Nie ma wpływu na optymalizację", "Zawsze zwiększa szybkość działania"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jak definiuje się stałą symboliczną w języku C?", 
+  answers: ["#define nazwa tekst_zastępujący", "#define tekst nazwa", "const nazwa = wartość", "symbol = wartość"], 
+  correct: 0 
+},
+
+{ 
+  question: "Czym jest dyrektywa #define?", 
+  answers: ["Przyporządkowuje nazwie symbolicznej ciąg znaków", "Tworzy nowy typ danych", "Definiuje funkcję", "Inicjalizuje zmienną"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jaką wartość ma stała zdefiniowana jako #define PI 3.14?", 
+  answers: ["3.14", "3", "pi", "Nie jest zdefiniowana"], 
+  correct: 0 
+},
+
+{ 
+  question: "Czy stałe symboliczne mogą być używane do definiowania wartości liczbowych?", 
+  answers: ["Tak", "Nie", "Tylko dla liczb całkowitych", "Tylko dla liczb zmiennopozycyjnych"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jakie są przykłady stałych symbolicznych?", 
+  answers: ["#define PI 3.14, #define LICZBA_MASZYN 4", "#define 4 3.14, #define PI LICZBA_MASZYN", "const PI = 3.14", "static LICZBA_MASZYN 4"], 
+  correct: 0 
+},
+
+{ 
+  question: "Co oznacza typ void w języku C?", 
+  answers: ["Typ próżny", "Typ wskaźnika", "Typ liczbowy", "Typ tekstowy"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jak zdefiniować funkcję, która nie ma parametrów w języku C?", 
+  answers: ["int funkcja(void)", "void funkcja()", "void funkcja(void)", "int funkcja()"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jak zdefiniować funkcję, która nie zwraca żadnej wartości?", 
+  answers: ["void funkcja(int)", "int funkcja(void)", "char funkcja(void)", "float funkcja()"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jakie jest zastosowanie typu void w języku C?", 
+  answers: ["Do oznaczania funkcji bez wartości zwracanej", "Do tworzenia wskaźników", "Do deklarowania zmiennych globalnych", "Do określania typów danych"], 
+  correct: 0 
+},
+
+{ 
+  question: "Czy typ void może być używany w deklaracjach funkcji?", 
+  answers: ["Tak", "Nie", "Tylko w wskaźnikach", "Tylko w zmiennych lokalnych"], 
+  correct: 0 
+},
+{ 
+  question: "Co to jest typ tablicowy w języku C?", 
+  answers: ["Typ pochodny", "Typ podstawowy", "Typ logiczny", "Typ strukturalny"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jakie obiekty można używać do tworzenia tablic w języku C?", 
+  answers: ["Obiekty typu podstawowego", "Obiekty typu wyliczeniowego", "Inne tablice", "Wszystkie powyższe"], 
+  correct: 3 
+},
+
+{ 
+  question: "Czy tablice mogą być tworzone z obiektów typu zdefiniowanego przez użytkownika?", 
+  answers: ["Tak", "Nie", "Tylko w C++", "Tylko w C"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jakie rodzaje obiektów mogą być elementami tablic w C?", 
+  answers: ["Tylko obiekty typu podstawowego", "Tylko obiekty typu wyliczeniowego", "Tylko wskaźniki", "Różne typy, w tym wskaźniki i inne tablice"], 
+  correct: 3 
+},
+
+{ 
+  question: "Czy można tworzyć tablice wskaźników w języku C?", 
+  answers: ["Tak", "Nie", "Tylko w C++", "Tylko z typem podstawowym"], 
+  correct: 0 
+},
+{ 
+  question: "Jak wygląda definicja tablicy w języku C?", 
+  answers: ["typ_elementów nazwa_tablicy[wymiar];", "nazwa_tablicy[wymiar];", "typ nazwa_tablicy;", "typ_elementów[nazwa_tablicy];"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jakie jest poprawne odwołanie do pierwszego elementu tablicy 'a'?", 
+  answers: ["a[1]", "a[0]", "a[10]", "a[-1]"], 
+  correct: 1 
+},
+
+{ 
+  question: "Co oznacza wymiar w definicji tablicy?", 
+  answers: ["Liczbę elementów w tablicy", "Typ danych w tablicy", "Nazwę tablicy", "Indeks elementu"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jak można zadeklarować tablicę znaków o długości 20?", 
+  answers: ["char tab(20);", "char tab_z[20];", "char[20] tab;", "tab[20] char;"], 
+  correct: 1 
+},
+
+{ 
+  question: "Jakie jest poprawne odwołanie do ostatniego elementu tablicy Ftab o rozmiarze 15?", 
+  answers: ["Ftab[14]", "Ftab[15]", "Ftab[0]", "Ftab[1]"], 
+  correct: 0 
+},
+{ 
+  question: "Jak wygląda poprawna inicjalizacja tablicy long z 4 elementami?", 
+  answers: ["long t[4] = {72896, 15, 6, 70800};", "long t[4] = 72896, 15, 6, 70800;", "long t = {72896, 15, 6, 70800};", "long t[4] = (72896, 15, 6, 70800);"], 
+  correct: 0 
+},
+
+{ 
+  question: "Co się dzieje z niewymienionymi elementami tablicy float przy inicjalizacji?", 
+  answers: ["Zostaną zainicjalizowane losowymi wartościami", "Zostaną zainicjalizowane do 0.0", "Będą miały wartość null", "Nie można ich zainicjalizować"], 
+  correct: 1 
+},
+
+{ 
+  question: "Jak można zadeklarować i zainicjalizować tablicę int z 3 elementami?", 
+  answers: ["int tt[3] = {3, 6, 19};", "int tt[] = {3, 6, 19};", "int tt[3]; tt = {3, 6, 19};", "int tt[3] = 3, 6, 19;"], 
+  correct: 1 
+},
+
+{ 
+  question: "Jakie będą wartości nieprzypisanych elementów tablicy float ta[4] = {1.2, 5.0};?", 
+  answers: ["Będą losowe", "Będą równe 0.0", "Będą równe 1.0", "Będą równe 1.2"], 
+  correct: 1 
+},
+
+{ 
+  question: "Czy można zainicjalizować tablicę bez podawania jej rozmiaru?", 
+  answers: ["Tak, jeśli podasz wszystkie elementy", "Nie, rozmiar musi być zawsze podany", "Tak, ale tylko dla tablic char", "Nie, dla float jest to niemożliwe"], 
+  correct: 0 
+},
+{ 
+  question: "Jak wygląda poprawna definicja tablicy znakowej o długości 20?", 
+  answers: ["char tekst[20];", "char tekst[20] = {20};", "char tekst = {20};", "char tekst[20] = 'Alpy';"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jak można zainicjalizować tablicę znakową z napisem 'Alpy'?", 
+  answers: ["char tekst[20] = {'A', 'l', 'p', 'y'};", "char tekst[20] = {'Alpy'};", "char tekst[20] = {'A', 'l', 'p', 'y', '\\0'};", "char tekst[20] = {'Alpy'};"], 
+  correct: 2 
+},
+
+{ 
+  question: "Ile elementów ma tablica znakowa char tekst[] = {'T', 'a', 't', 'r', 'y'};", 
+  answers: ["5", "6", "4", "7"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jak zainicjalizować tablicę znakową z napisem 'Tatry'?", 
+  answers: ["char tekst[6] = {'T', 'a', 't', 'r', 'y'};", "char tekst[] = {'Tatry'};", "char tekst[] = {'T', 'a', 't', 'r', 'y', '\\0'};", "char tekst[6] = {'T', 'a', 't', 'r', 'y', '\0'};"], 
+  correct: 3 
+},
+
+{ 
+  question: "Co oznacza znak '\\0' w tablicach znakowych?", 
+  answers: ["Jest to koniec łańcucha", "To znak nowej linii", "To znak tabulacji", "To znak spacji"], 
+  correct: 0 
+},
+{ 
+  question: "Jak wygląda poprawna definicja tablicy dwuwymiarowej w języku C?", 
+  answers: ["int aa[n][m];", "int aa[n, m];", "int aa{n},{m};", "int aa[n, m] = {0};"], 
+  correct: 0 
+},
+
+{ 
+  question: "Ile wymiarów ma tablica zdefiniowana jako int aa[n][m]?", 
+  answers: ["1", "2", "3", "n"], 
+  correct: 1 
+},
+
+{ 
+  question: "Jak odwołać się do elementu w tablicy dwuwymiarowej aa w wierszu j i kolumnie k?", 
+  answers: ["aa[j][k]", "aa(k, j)", "aa[j, k]", "aa{k},[j];"], 
+  correct: 0 
+},
+
+{ 
+  question: "Jak można zdefiniować tablicę dwuwymiarową z 3 wierszami i 4 kolumnami?", 
+  answers: ["int aa[3][4];", "int aa[3, 4];", "int aa{3},{4};", "int aa[4][3];"], 
+  correct: 0 
+},
+
+{ 
+  question: "Co oznacza n w definicji tablicy dwuwymiarowej int aa[n][m]?", 
+  answers: ["Liczba wierszy", "Liczba kolumn", "Liczba elementów", "Rozmiar tablicy"], 
+  correct: 0 
+},
+
+{ question: "Jak można zainicjalizować tablicę dwuwymiarową w C?",
+ answers: [ 
+  "short aa[2][3] = {3, 7, 13, 8, 50, 71};",
+   "short aa[2][3] = {{3, 7} {8, 50}};",
+    "short aa[2][3] = {3, 7, 13, 8};",
+     "short aa[2][3]; aa[0][0] = 3;" ], 
+correct: 0 },
+
+{ 
+  question: "Które z poniższych inicjalizacji są równoważne?", 
+  answers: [
+    "short aa[2][3] = {3, 7, 13, 8, 50, 71};", 
+    "short aa[2][3] = {{3, 7, 13}, {8, 50, 71},};", 
+    "short aa[2][3] = {3, 7, 13};", 
+    "short aa[2][3] = {{3, 7}, {8, 50, 71},};"
+  ], 
+  correct: 1 
+},
+
+{ 
+  question: "Jakie wartości zostaną przypisane do aa[0][2] i aa[1][1] w poniższej tablicy? short aa[2][3] = {{3, 7, 13}, {8, 50, 71},};", 
+  answers: [
+    "13 i 50", 
+    "3 i 8", 
+    "7 i 71", 
+    "50 i 8"
+  ], 
+  correct: 0 
+},
+
+{ 
+  question: "Jakie jest poprawne przypisanie do elementu tablicy aa w języku C?", 
+  answers: [
+    "aa[0][1] = 10;", 
+    "aa[1, 2] = 10;", 
+    "aa[1][2] = 10;", 
+    "aa[0][2] = 10;"
+  ], 
+  correct: 2 
+},
+
+{ 
+  question: "Jak można zainicjalizować pustą tablicę dwuwymiarową?", 
+  answers: [
+    "short aa[2][3] = {{0},};", 
+    "short aa[2][3];", 
+    "short aa[2][3] = {0};", 
+    "short aa[2][3] = {{},};"
+  ], 
+  correct: 0 
+},
+{ 
+  question: "Jak poprawnie zainicjalizować tablicę dwuwymiarową o stałej szerokości?", 
+  answers: [
+    "short aa[ ][3] = {{3, 7, 13}, {8, 50, 71},};", 
+    "short aa[ ][3] = {3, 7, 13, 8, 50, 71};", 
+    "short aa[3][ ] = {{3, 7, 13}, {8, 50, 71},};", 
+    "short aa[2][3] = {{3, 7}, {8, 50},};"
+  ], 
+  correct: 0 
+},
+
+{ 
+  question: "Która z poniższych inicjalizacji jest poprawna dla trójwymiarowej tablicy?", 
+  answers: [
+    "int bbb[ ][2][2] = {0, 7, 8, 256, 90, 8, 675, 1};", 
+    "int bbb[2][2][2] = {0, 7, 8, 256, 90, 8, 675, 1};", 
+    "int bbb[ ][ ][2] = {0, 7, 8, 256, 90, 8, 675, 1};", 
+    "int bbb[2][2][2] = {{{0, 7}, {8, 256},}, {{90, 8}, {675, 1},},};"
+  ], 
+  correct: 1 
+},
+
+{ 
+  question: "Jakie są wymiary tablicy 'short aa[ ][3] = {{3, 7, 13}, {8, 50, 71},}; '?", 
+  answers: [
+    "2 wiersze i 3 kolumny", 
+    "3 wiersze i 2 kolumny", 
+    "2 wiersze i 2 kolumny", 
+    "1 wiersz i 3 kolumny"
+  ], 
+  correct: 0 
+},
+
+{ 
+  question: "Czy poniższa inicjalizacja tablicy jest poprawna? int bbb[ ][2][2] = {0, 7, 8, 256, 90, 8, 675, 1};", 
+  answers: [
+    "Tak, jest poprawna.", 
+    "Nie, brakuje wymiarów.", 
+    "Tak, ale tylko dla pierwszego wymiaru.", 
+    "Nie, należy podać wszystkie wymiary."
+  ], 
+  correct: 1 
+},
+
+{ 
+  question: "Co się stanie, gdy spróbujemy zainicjalizować 'int bbb[ ][ ][2] = {0, 7, 8, 256, 90, 8, 675, 1};'?", 
+  answers: [
+    "Zostanie zainicjalizowana poprawnie.", 
+    "Pojawi się błąd kompilacji.", 
+    "Zainicjalizuje tylko pierwszy wymiar.", 
+    "Będzie działać, ale z ostrzeżeniem."
+  ], 
+  correct: 1 
+},
+{ 
+  question: "Co to jest funkcja w języku C?", 
+  answers: [
+    "Fragment kodu, który wykonuje określone zadanie.", 
+    "Typ zmiennej.", 
+    "Struktura danych.", 
+    "Rodzaj pętli."
+  ], 
+  correct: 0 
+},
+
+{ 
+  question: "Jak nazywa się najważniejsza funkcja, która musi wystąpić w każdym programie C?", 
+  answers: [
+    "start", 
+    "main", 
+    "begin", 
+    "run"
+  ], 
+  correct: 1 
+},
+
+{ 
+  question: "Czym jest funkcja w języku C w porównaniu do Pascala?", 
+  answers: [
+    "Jest równoważna podprogramowi.", 
+    "Jest bardziej skomplikowana.", 
+    "Nie istnieje w Pascalu.", 
+    "Jest tylko typem zmiennej."
+  ], 
+  correct: 0 
+},
+
+{ 
+  question: "Jakie elementy składają się na definicję funkcji w C?", 
+  answers: [
+    "Typ zwracany, nazwa funkcji, parametry i ciało funkcji.", 
+    "Tylko nazwa funkcji i ciało.", 
+    "Tylko typ zwracany i parametry.", 
+    "Typ zwracany, tylko jedna zmienna i ciało."
+  ], 
+  correct: 0 
+},
+
+{ 
+  question: "Czy każda funkcja w C musi mieć parametry?", 
+  answers: [
+    "Tak, musi mieć co najmniej jeden parametr.", 
+    "Nie, może nie mieć parametrów.", 
+    "Tak, ale tylko w niektórych przypadkach.", 
+    "Nie, ale musi zwracać wartość."
+  ], 
+  correct: 1 
+},
+{ 
+  question: "Co to jest prototyp funkcji w języku C?", 
+  answers: [
+    "Deklaracja funkcji, która określa jej typ zwracany i parametry.", 
+    "Implementacja funkcji.", 
+    "Rodzaj zmiennej.", 
+    "Typ tablicy."
+  ], 
+  correct: 0 
+},
+
+{ 
+  question: "Gdzie zazwyczaj umieszczany jest prototyp funkcji w programie C?", 
+  answers: [
+    "Na końcu programu.", 
+    "Wewnątrz funkcji main.", 
+    "Przed funkcją main.", 
+    "Nie ma potrzeby umieszczania prototypu."
+  ], 
+  correct: 2 
+},
+
+{ 
+  question: "Jakie elementy składają się na prototyp funkcji w języku C?", 
+  answers: [
+    "Typ zwracany, nazwa funkcji, lista typów parametrów.", 
+    "Nazwa funkcji i jej ciało.", 
+    "Tylko typ zwracany i parametry.", 
+    "Typ zwracany i komentarz."
+  ], 
+  correct: 0 
+},
+
+{ 
+  question: "Czym różni się prototyp funkcji od jej definicji?", 
+  answers: [
+    "Prototyp nie zawiera ciała funkcji.", 
+    "Definicja nie zawiera typów parametrów.", 
+    "Prototyp jest dłuższy od definicji.", 
+    "Nie ma różnicy."
+  ], 
+  correct: 0 
+},
+
+{ 
+  question: "Jak powinien wyglądać prototyp funkcji, która przyjmuje dwa argumenty typu int i zwraca int?", 
+  answers: [
+    "void funkcja(int, int);", 
+    "int funkcja(int, int);", 
+    "int funkcja(void);", 
+    "int funkcja(int);"
+  ], 
+  correct: 1 
+}
+
+
+     ];
+
+
+
+                // Losowo wybieramy 10 pytań raz, aby były stałe przez cały quiz
+        const randomQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 10);
+
+        // Wczytanie quizu na stronę
+        function loadQuiz() {
+            const quizContainer = document.getElementById("quiz-container");
+            randomQuestions.forEach((q, index) => {
+                const questionEl = document.createElement("div");
+                questionEl.className = "question";
+                questionEl.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+                q.answers.forEach((answer, i) => {
+                    questionEl.innerHTML += `
+                        <label>
+                            <input type="radio" name="question${index}" value="${i}">
+                            ${answer}
+                        </label><br>
+                    `;
+                });
+                questionEl.innerHTML += `<p class="answer-feedback" id="feedback${index}"></p>`;
+                quizContainer.appendChild(questionEl);
+            });
+        }
+
+        // Funkcja do sprawdzania odpowiedzi i wyświetlania wyników
+        function checkAnswers() {
+            let score = 0;
+
+            randomQuestions.forEach((question, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                const feedbackEl = document.getElementById(`feedback${index}`);
+                
+                if (selected) {
+                    const selectedAnswer = parseInt(selected.value);
+                    if (selectedAnswer === question.correct) {
+                        score++;
+                        feedbackEl.innerText = "Odpowiedź prawidłowa!";
+                        feedbackEl.className = "answer-feedback correct";
+                    } else {
+                        feedbackEl.innerText = `Nieprawidłowa odpowiedź. Poprawna: ${question.answers[question.correct]}`;
+                        feedbackEl.className = "answer-feedback incorrect";
+                    }
+                } else {
+                    feedbackEl.innerText = "Nie wybrano odpowiedzi.";
+                    feedbackEl.className = "answer-feedback incorrect";
+                }
+            });
+            document.getElementById("result").innerText = `Twój wynik to: ${score} / 10`;
+        }
+
+        loadQuiz();
+    </script>
+</body></html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+<script>hljs.highlightAll();</script>
