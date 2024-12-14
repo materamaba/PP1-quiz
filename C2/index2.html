@@ -914,7 +914,15 @@ const questions = [
     "correct": 1
 },
 {
-    "question": "W jakiej sytuacji używana jest instrukcja 'goto' w podanym przykładzie?",
+    `question": "W jakiej sytuacji używana jest instrukcja 'goto' w podanym przykładzie?
+    <pre><code class=\"language-c\">for (…)
+        for (…) {
+            …
+        if (niepowodzenie)
+        goto error; // skocz do obsługi błędów
+    }
+    …
+        error: printf("Blad");</code></pre>`,
     "answers": [
         "Gdy wystąpi błąd, program skacze do etykiety 'error'",
         "Gdy chcemy zakończyć program",
@@ -924,7 +932,16 @@ const questions = [
     "correct": 1
 },
 {
-    "question": "Co oznacza zapis 'error: printf("Blad");' w przykładzie z instrukcją 'goto'?",
+    "question": `Co oznacza zapis 'error: printf("Blad");' w przykładzie z instrukcją 'goto'?
+        <pre><code class=\"language-c\">for (…)
+        for (…) {
+            …
+        if (niepowodzenie)
+        goto error; // skocz do obsługi błędów
+    }
+    …
+        error: printf("Blad");</code></pre>
+    `,
     "answers": [
         "Jest to etykieta, do której skoczy program, gdy wystąpi błąd",
         "Jest to definicja nowej funkcji",
@@ -940,16 +957,6 @@ const questions = [
         "Zajmuje zbyt dużo pamięci",
         "Może prowadzić do błędów kompilacji",
         "Jest tylko dostępna w wersji C++"
-    ],
-    "correct": 1
-},
-{
-    "question": "Co oznacza zapis 'goto error;' w przykładzie z instrukcją 'goto'?",
-    "answers": [
-        "Program przeskoczy do etykiety 'error' w celu obsługi błędu",
-        "Program zakończy działanie",
-        "Program wykona nową pętlę",
-        "Program przejdzie do funkcji main"
     ],
     "correct": 1
 },
