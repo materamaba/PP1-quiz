@@ -228,9 +228,6 @@
 ];
 
 
-
-
-                // Losowo wybieramy 10 pytań raz, aby były stałe przez cały quiz
         const randomQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 10);
 
         // Wczytanie quizu na stronę
@@ -240,11 +237,11 @@
                 const questionEl = document.createElement("div");
                 questionEl.className = "question";
                 questionEl.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
-                q.answers.forEach((answer, i) => {
+                q.options.forEach((option, i) => {
                     questionEl.innerHTML += `
                         <label>
-                            <input type="radio" name="question${index}" value="${i}">
-                            ${answer}
+                            <input type="radio" name="question${index}" value="${option}">
+                            ${option}
                         </label><br>
                     `;
                 });
@@ -262,13 +259,13 @@
                 const feedbackEl = document.getElementById(`feedback${index}`);
                 
                 if (selected) {
-                    const selectedAnswer = parseInt(selected.value);
-                    if (selectedAnswer === question.correct) {
+                    const selectedAnswer = selected.value;
+                    if (selectedAnswer === question.answer) {
                         score++;
                         feedbackEl.innerText = "Odpowiedź prawidłowa!";
                         feedbackEl.className = "answer-feedback correct";
                     } else {
-                        feedbackEl.innerText = `Nieprawidłowa odpowiedź. Poprawna: ${question.answers[question.correct]}`;
+                        feedbackEl.innerText = `Nieprawidłowa odpowiedź. Poprawna: ${question.answer}`;
                         feedbackEl.className = "answer-feedback incorrect";
                     }
                 } else {
@@ -276,10 +273,11 @@
                     feedbackEl.className = "answer-feedback incorrect";
                 }
             });
-            document.getElementById("result").innerText = `Twój wynik to: ${score} / 10`;
+            document.getElementById("result").innerText = `Twój wynik to: ${score} / ${randomQuestions.length}`;
         }
 
         loadQuiz();
+    </script>
     </script>
 
    <div class="section" id="notes">
