@@ -1,1 +1,379 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz z TPI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            background-color: #121212;
+            color: #ffffff;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .question {
+            margin-bottom: 15px;
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .incorrect { color: red; }
+        .correct { color: green; }
+        .answer-feedback { font-weight: bold; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Quiz z TPI</h1>
+    <div id="quiz-container"></div>
+    <button onclick="checkAnswers()">Sprawdź odpowiedzi</button>
+    <div id="result"></div>
 
+    <script>
+const questions = [
+    {
+        "question": "Kod wynikowy pojedynczego rozkazu składa się:",
+        "answers": ["z instrukcji i danych", "części arytmetycznej i logicznej", "z części logicznej i operacyjnej", "z procesora i pamięci"],
+        "correct": 1
+    },
+    {
+        "question": "Do wyświetlania obrazów kolorowych na monitorze stosowana jest:",
+        "answers": ["technologia YUV", "technologia RGB", "technologia CMYK", "technologia HSL"],
+        "correct": 1
+    },
+    {
+        "question": "FAT 32 jest to:",
+        "answers": ["system plików Linux", "system plików systemu operacyjnego Windows 95", "system plików Android", "system plików macOS"],
+        "correct": 1
+    },
+    {
+        "question": "Pamięć cache L1 procesora tradycyjnie dzielona jest na:",
+        "answers": ["pamięć wewnętrzną i zewnętrzną", "pamięć ROM i RAM", "pamięć instrukcji i pamięć danych", "pamięć programów i pamięć operacyjną"],
+        "correct": 2
+    },
+    {
+        "question": "Współczesne pamięci SD RAM mają czasy dostępu rzędu:",
+        "answers": ["1 - 3 ms", "20 - 30 ns", "2 - 5 ns", "10 - 15 ns"],
+        "correct": 2
+    },
+    {
+        "question": "Ile różnych liczb można zapisać w jednym bajcie?",
+        "answers": ["128", "256", "1024", "512"],
+        "correct": 1
+    },
+    {
+        "question": "Pamięć typu „Flash”, to pamięć:",
+        "answers": ["magnetyczna", "elektroniczna", "optyczna", "mechaniczna"],
+        "correct": 1
+    },
+    {
+        "question": "Powłoka systemu operacyjnego jest to:",
+        "answers": ["część systemu zarządzająca pamięcią", "warstwa zewnętrzna, stanowiąca interfejs użytkownika", "proces komunikacji z urządzeniami wejścia/wyjścia", "podstawowy program uruchamiania systemu"],
+        "correct": 1
+    },
+    {
+        "question": "Poniżej podano klasy złożoności algorytmów. Wybierz najbardziej efektywny.",
+        "answers": ["O(n^2)", "O(log n)", "O(n!)", "O(n)"],
+        "correct": 1
+    },
+    {
+        "question": "Specyfikacja algorytmu stosowana do sprawdzenia jego częściowej poprawności to:",
+        "answers": ["testy jednostkowe algorytmu", "warunek wstępny, akcja, warunek końcowy", "opis kroków algorytmu", "warunki brzegowe, analiza danych, wynik"],
+        "correct": 1
+    },
+    {
+        "question": "Zapis algorytmu w konkretnym języku programowania to:",
+        "answers": ["diagram blokowy", "specyfikacja", "implementacja", "pseudokod"],
+        "correct": 2
+    },
+    {
+        "question": "Sposób zapisu algorytmu, który zachowując strukturę charakterystyczną dla kodu zapisanego w języku programowania, rezygnuje ze ścisłych reguł składniowych na rzecz prostoty i czytelności to:",
+        "answers": ["notacja graficzna", "pseudokod", "kod źródłowy", "diagram blokowy"],
+        "correct": 1
+    },
+    {
+        "question": "Zestaw linii oraz układów przełączających, łączący bezpośrednio najważniejsze układy komputera tj.: procesor, pamięć operacyjną oraz urządzenia I/O to:",
+        "answers": ["szyna przerwań", "port szeregowy", "magistrala systemowa", "interfejs komunikacyjny"],
+        "correct": 2
+    },
+    {
+        "question": "Do pracy w skrajnych warunkach (temperatura, wstrząsy itp.) najlepsze są dyski typu:",
+        "answers": ["dyski HDD", "dyski SSD", "płyty CD", "dyski zewnętrzne"],
+        "correct": 1
+    },
+    {
+        "question": "Architektura procesorów wielordzeniowych (głównie kart graficznych) umożliwiająca wykorzystanie ich mocy obliczeniowej do rozwiązywania problemów numerycznych poprzez zrównoleglenie obliczeń to:",
+        "answers": ["CPU", "GPU", "RAM", "ALU"],
+        "correct": 1
+    },
+    {
+        "question": "O dokładności zapisu liczby w formacie zmiennoprzecinkowym IEEE 754 decyduje:",
+        "answers": ["adres pamięci", "mantysa", "wartość stała", "cecha"],
+        "correct": 1
+    },
+    {
+        "question": "Notacja „Wielkie O” stosowana jest do określania:",
+        "answers": ["wydajności systemu", "złożoności asymptotycznej algorytmu", "czasów wykonania operacji", "skali działania algorytmu"],
+        "correct": 1
+    },
+    {
+        "question": "Budowa i zasada działania płyty DVD jest najbardziej zbliżona do budowy:",
+        "answers": ["dysku twardego z wykorzystaniem lasera", "płyty CD tylko z większą pojemnością", "płyta CD, Blu-Ray lub dysk magnetyczny, ale wykorzystuje światło zamiast pól magnetycznych", "dysku SSD"],
+        "correct": 1
+    },
+    {
+        "question": "Pojemność współczesnych dysków twardych jest rzędu:",
+        "answers": ["od 500 MB do 5 TB", "od 1 GB do 10 TB", "od 10 GB do 1 TB", "od 100 GB do 20 TB"],
+        "correct": 3
+    },
+    {
+        "question": "Która pamięć w komputerze wymaga okresowego odświeżania zawartości?",
+        "answers": ["Pamięć ROM", "Pamięć EEPROM", "Pamięć Flash", "Pamięć RAM (DRAM)"],
+        "correct": 3
+    },
+    {
+        "question": "W bibliotece kompilatora znajdują się:",
+        "answers": ["algorytmy szyfrowania", "struktury danych", "moduły systemowe", "kody procedur i funkcji standardowych"],
+        "correct": 3
+    },
+    {
+        "question": "Karta graficzna jest to:",
+        "answers": ["procesor obliczeniowy", "interfejs USB", "sterownik we/wy monitora", "urządzenie pamięci"],
+        "correct": 2
+    },
+    {
+        "question": "Format zmiennoprzecinkowy zapisu liczb IEEE 754 zawiera:",
+        "answers": ["bit znaku, cechę i mantysę", "bit znaku, wykładnik i mantysę", "cechę, mantysę i kodowanie", "bit znaku, adres i dane"],
+        "correct": 1
+    },
+    {
+        "question": "Układ scalony na płycie głównej wspierający (CPU) i zapewniający poprawną komunikację pomiędzy głównymi podzespołami komputera to:",
+        "answers": ["szyna systemowa", "procesor", "pamięć RAM", "chipset"],
+        "correct": 3
+    },{
+        "question": "Pamięć RAM jest to:",
+        "answers": ["Pamięć o dostępie swobodnym (random access memory)", "Pamięć tylko do zapisu", "Pamięć tylko do odczytu", "Pamięć buforowa"],
+        "correct": 0
+    },
+    {
+        "question": "Ile wynosi czas cyklu procesora (ns)?",
+        "answers": ["ns", "ps", "us", "ms"],
+        "correct": 0
+    },
+    {
+        "question": "Ile wynosi czas dostępu do komórki w dysku HDD (ms)?",
+        "answers": ["ms (granice 15-20, najczęściej 16)", "us", "ns", "s"],
+        "correct": 0
+    },
+    {
+        "question": "Co to jest przestrzeń adresowa procesora?",
+        "answers": ["zakres adresów zewnętrznych", "zbiór adresów pamięci do których może się odnieść procesor", "ilość pamięci, jaką procesor może zaadresować", "część pamięci RAM"],
+        "correct": 1
+    },
+    {
+        "question": "Co to jest system binarny?",
+        "answers": ["system dwójkowy na którym oparte jest działanie komputera (0 fałsz, 1 prawda)", "system dziesiętny", "system szesnastkowy", "system ósemkowy"],
+        "correct": 0
+    },
+    {
+        "question": "Algorytm jest to:",
+        "answers": ["opcja w menu programu", "rozwiązanie matematyczne", "program komputerowy", "sposób rozwiązania problemu w postaci skończonej liczby operacji o określonej kolejności"],
+        "correct": 3
+    },
+    {
+        "question": "Co to jest kompilator?",
+        "answers": ["program do debugowania", "program do konwersji formatów", "edytor tekstu", "rodzaj translatora, który tłumaczy kod w wybranym języku programowania na kod wynikowy"],
+        "correct": 3
+    },
+    {
+        "question": "Podaj nazwę uniwersalnego interfejsu szeregowego.",
+        "answers": ["USB", "HDMI", "VGA", "Ethernet"],
+        "correct": 0
+    },
+    {
+        "question": "Jeżeli zależy nam na szybkiej realizacji programu, najlepiej napisać go przy użyciu:",
+        "answers": ["interpretera", "maszyny wirtualnej", "kompilatora", "zestawu narzędzi do optymalizacji"],
+        "correct": 2
+    },
+    {
+        "question": "Jak się nazywa element procesora (lub rdzenia procesora), który służy do wykonywania operacji arytmetycznych i logicznych?",
+        "answers": ["arytmometr", "ALU", "FPU", "CUP"],
+        "correct": 1
+    },
+    {
+        "question": "Interfejs komunikacyjny jest to:",
+        "answers": ["program łączący aplikację z systemem operacyjnym", "urządzenie i standard określający warunki współpracy dwóch lub więcej urządzeń", "procedura programowa wymiany danych", "zestaw kabli do komunikacji"],
+        "correct": 1
+    },
+    {
+        "question": "Co jest przesyłane do dekodera procesora w czasie wykonywania programu?",
+        "answers": ["instrukcja lub rozkaz", "adres pamięci", "wynik operacji", "dane wejściowe"],
+        "correct": 0
+    },
+    {
+        "question": "Pojemność płyty DVD wynosi:",
+        "answers": ["od 700 MB do 5 GB", "od 4,7 GB do 17,08 GB", "od 20 MB do 1 GB", "od 1 GB do 10 GB"],
+        "correct": 1
+    },
+    {
+        "question": "Podaj nazwę urządzenia wejściowego, które umożliwia wczytywanie obrazów do pamięci komputera.",
+        "answers": ["drukarka", "monitor", "skaner", "klawiatura"],
+        "correct": 2
+    },
+    {
+        "question": "Wpisz nazwę urządzenia, które z reguły wymienia dane z jednostką systemową w trybie DMA.",
+        "answers": ["drukarka", "klawiatura", "dysk twardy", "monitor"],
+        "correct": 2
+    },
+    {
+        "question": "Tradycyjny sektor na dyskietce lub dysku twardym ma pojemność:",
+        "answers": ["tradycyjnie sektor ma 512 bajtów dla dyskietek i dysków twardych (HDD)", "256 bajtów", "1 KB", "4 KB"],
+        "correct": 0
+    },
+    {
+        "question": "Jak się nazywa sygnał sterujący informujący procesor, że urządzenie jest gotowe do pracy?",
+        "answers": ["EXECUTE", "READY", "START", "ALERT"],
+        "correct": 1
+    },
+    {
+        "question": "Jak nazywa się parametr procesora, który określa rozmiar pamięci operacyjnej, którą procesor jest w stanie zaadresować?",
+        "answers": ["Cache L2", "Pojemność RAM", "Przestrzeń adresowa procesora", "Limit pamięci"],
+        "correct": 2
+    },
+    {
+        "question": "Potokowe przetwarzanie instrukcji w procesorze realizowane jest w celu:",
+        "answers": ["redukcji zużycia energii", "dzielenia pamięci na wiele procesów", "umożliwienia jednoczesnego przetwarzania więcej niż jednego programu lub wątku", "przyspieszenia cyklu zegara"],
+        "correct": 2
+    },
+    {
+        "question": "Pamięć śledząca – trace cache w nowszych procesorach firmy Intel jest to:",
+        "answers": ["pamięć instrukcji L1 przed dekoderem", "pamięć dla operacji we/wy", "pamięć danych w procesorze", "pamięć podręczna dla wątków"],
+        "correct": 0
+    },
+    {
+        "question": "System binarny służy do:",
+        "answers": ["adresowania procesów w pamięci", "kompresji danych", "zapisywania wszelkich informacji przetwarzanych w komputerze", "przechowywania danych na nośnikach optycznych"],
+        "correct": 0
+    },
+    {
+        "question": "W wyniku generacji kodu w procesie kompilacji powstaje najpierw:",
+        "answers": ["plik wynikowy", "skrypt", "kod półskompilowany", "kod źródłowy"],
+        "correct": 2
+    },
+    {
+        "question": "Sterownik we/wy jest to:",
+        "answers": ["interfejs pamięci RAM", "komponent systemu operacyjnego", "urządzenie sprzęgające urządzenie zewnętrzne z komputerem", "oprogramowanie do zarządzania procesami"],
+        "correct": 2
+    },
+    {
+        "question": "W procesorach o najnowszej architekturze hiperskalarnej jest:",
+        "answers": ["potokowe przetwarzanie instrukcji i parę jednostek wykonawczych", "szeroka pamięć cache L3", "przestrzeń adresowa z podwójnym dostępem", "jeden rdzeń i wiele wątków"],
+        "correct": 0
+    },
+    {
+        "question": "Klasę złożoności algorytmu można doświadczalnie zweryfikować poprzez:",
+        "answers": ["przeanalizowanie kodu źródłowego", "szacowanie ilości pamięci", "pomiar czasów działania algorytmu dla różnych zbiorów wejściowych", "określenie liczby linii kodu"],
+        "correct": 2
+    },
+    {
+        "question": "Transmisją danych w trybie DMA steruje:",
+        "answers": ["kontroler DMA", "szyna systemowa", "procesor", "pamięć operacyjna"],
+        "correct": 0
+    },
+    {
+        "question": "Głowice elektromagnetyczne lub magnetorezystywne stosowane są do zapisywania i odczytywania informacji:",
+        "answers": ["na karcie SD", "na pamięci flash", "na twardym dysku", "na płycie CD"],
+        "correct": 2
+    },
+    {
+        "question": "Do odczytu informacji zapisanej na płycie CD używane jest światło:",
+        "answers": ["ultrafioletowe", "światło widzialne", "podczerwone", "laserowe"],
+        "correct": 3
+    },
+    {
+        "question": "Co robi szyna przerwań?",
+        "answers": ["wykonuje operacje arytmetyczne", "przesyła dane między procesorem a pamięcią", "obsługuje wejście/wyjście za pomocą przerwań", "komunikuje procesor z urządzeniami zewnętrznymi"],
+        "correct": 2
+    }
+
+
+
+                // Losowo wybieramy 10 pytań raz, aby były stałe przez cały quiz
+        const randomQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 10);
+
+        // Wczytanie quizu na stronę
+        function loadQuiz() {
+            const quizContainer = document.getElementById("quiz-container");
+            randomQuestions.forEach((q, index) => {
+                const questionEl = document.createElement("div");
+                questionEl.className = "question";
+                questionEl.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+                q.answers.forEach((answer, i) => {
+                    questionEl.innerHTML += `
+                        <label>
+                            <input type="radio" name="question${index}" value="${i}">
+                            ${answer}
+                        </label><br>
+                    `;
+                });
+                questionEl.innerHTML += `<p class="answer-feedback" id="feedback${index}"></p>`;
+                quizContainer.appendChild(questionEl);
+            });
+        }
+
+        // Funkcja do sprawdzania odpowiedzi i wyświetlania wyników
+        function checkAnswers() {
+            let score = 0;
+
+            randomQuestions.forEach((question, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                const feedbackEl = document.getElementById(`feedback${index}`);
+                
+                if (selected) {
+                    const selectedAnswer = parseInt(selected.value);
+                    if (selectedAnswer === question.correct) {
+                        score++;
+                        feedbackEl.innerText = "Odpowiedź prawidłowa!";
+                        feedbackEl.className = "answer-feedback correct";
+                    } else {
+                        feedbackEl.innerText = `Nieprawidłowa odpowiedź. Poprawna: ${question.answers[question.correct]}`;
+                        feedbackEl.className = "answer-feedback incorrect";
+                    }
+                } else {
+                    feedbackEl.innerText = "Nie wybrano odpowiedzi.";
+                    feedbackEl.className = "answer-feedback incorrect";
+                }
+            });
+            document.getElementById("result").innerText = `Twój wynik to: ${score} / 10`;
+        }
+
+        loadQuiz();
+    </script>
+</body></html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+<script>hljs.highlightAll();</script>
